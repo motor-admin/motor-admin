@@ -1,0 +1,42 @@
+<div class="container pt-3" style="max-width: 650px">
+  <div class="text-center">
+    <h1 class="py-5">
+      Motor Admin 👋
+    </h1>
+  </div>
+  <% if flash[:alert].present? && flash[:alert] != I18n.t('devise.failure.unauthenticated') %>
+    <div class="mb-3 ivu-alert ivu-alert-error ivu-alert-with-icon ivu-alert-with-desc"><span class="ivu-alert-icon"><i class="ion ion-ios-close-circle-outline"></i></span> <span class="ivu-alert-desc"><span>
+          <%= flash[:alert] %>
+        </span></span> <!----></div>
+      <% end %>
+  <div class="mb-2 ivu-card ivu-card-bordered">
+    <div class="ivu-card-body">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'ivu-form ivu-form-label-right'}) do |f| %>
+        <div class="ivu-form-item">
+          <%= f.label :email, class: 'ivu-form-item-label' %>
+          <div class="ivu-form-item-content">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type-email">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@example.com", class: "ivu-input ivu-input-large ivu-input-with-prefix" %>
+              <span class="ivu-input-prefix"><i class="ion ion-md-mail"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="ivu-form-item">
+          <%= f.label :password, class: 'ivu-form-item-label' %>
+          <div class="ivu-form-item-content">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type-password">
+              <%= f.password_field :password, autocomplete: "current-password", type: "password", placeholder:"**********", class: "ivu-input ivu-input-large ivu-input-with-prefix" %>
+              <span class="ivu-input-prefix"><i class="ion ion-md-key"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <%= f.submit "Log in", class: 'mt-1 ivu-btn ivu-btn-primary ivu-btn-long ivu-btn-large' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-center">
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<% if resource.errors.any? %>
+  <div class="mb-3 ivu-alert ivu-alert-error ivu-alert-with-icon ivu-alert-with-desc">
+    <span class="ivu-alert-icon"><i class="ion ion-ios-close-circle-outline"></i></span>
+      <span class="ivu-alert-desc">
+          <% resource.errors.full_messages.each do |message| %>
+            <%= message %><br>
+          <% end %>
+      <span>
+  </div>
+<% end %>

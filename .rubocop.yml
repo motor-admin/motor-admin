@@ -1,0 +1,76 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - node_modules/**/*
+    - ui/node_modules/**/*
+    - bin/*
+    - vendor/**/*
+    - gems/**/*
+    - db/schema.rb
+    - lib/generators/motor/templates/**/*
+    - Gemfile
+  TargetRubyVersion: '3.0'
+
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile
+    - '**/*.rake'
+    - spec/**/*
+    - config/environments/*
+    - config/routes.rb
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Metrics/AbcSize:
+  Max: 20
+
+Naming/FileName:
+  Enabled: false
+
+Naming/MethodParameterName:
+  MinNameLength: 2
+
+Metrics/ModuleLength:
+  Max: 300
+
+Rails/Date:
+  Enabled: false
+
+Rails/SquishedSQLHeredocs:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 20
+
+RSpec/MultipleExpectations:
+  Max: 10
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/Capybara/VisibilityMatcher:
+  Enabled: false
