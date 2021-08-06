@@ -1,0 +1,29 @@
+@import 'application/styles/variables';
+
+@import 'view3/src/styles/custom';
+@import 'view3/src/styles/mixins/index';
+@import 'view3/src/styles/common/icons';
+@import 'view3/src/styles/common/base';
+@import 'view3/src/styles/animation/index';
+
+@import 'view3/src/styles/components/button';
+@import 'view3/src/styles/components/card';
+@import 'view3/src/styles/components/alert';
+@import 'view3/src/styles/components/input';
+@import 'view3/src/styles/components/form';
+@import 'view3/src/styles/components/spin';
+@import 'view3/src/styles/components/tabs';
+@import 'view3/src/styles/components/message';
+@import 'view3/src/styles/components/modal';
+@import 'view3/src/styles/components/dropdown';
+@import 'view3/src/styles/components/tag';
+@import 'view3/src/styles/components/radio';
+@import 'view3/src/styles/components/divider';
+@import 'view3/src/styles/components/switch';
+@import 'view3/src/styles/components/select-dropdown';
+
+.#{$spin-prefix-cls} {
+  &-fix {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "standard",
+    "plugin:vue/vue3-recommended"
+  ],
+  "rules": {
+    "vue/no-mutating-props": 0,
+    "vue/no-v-html": 0
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "parser": "babel-eslint"
+  }
+}

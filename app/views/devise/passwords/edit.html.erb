@@ -1,0 +1,41 @@
+<div class="container pt-3" style="max-width: 650px">
+  <div class="text-center">
+    <h1 class="py-5">
+      Reset password 🤔
+    </h1>
+  </div>
+     <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="mb-2 ivu-card ivu-card-bordered">
+      <div class="ivu-card-body">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'ivu-form ivu-form-label-right', method: :put }) do |f| %>
+          <%= f.hidden_field :reset_password_token %>
+          <div class="ivu-form-item">
+            <%= f.label :password, class: 'ivu-form-item-label' %>
+            <div class="ivu-form-item-content">
+              <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type-email">
+                <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "ivu-input ivu-input-large ivu-input-with-prefix", placeholder:"**********" %>
+                <span class="ivu-input-prefix"><i class="ion ion-md-key"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ivu-form-item">
+            <%= f.label :password_confirmation, class: 'ivu-form-item-label' %>
+            <div class="ivu-form-item-content">
+              <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type-email">
+                <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "new-password", class: "ivu-input ivu-input-large ivu-input-with-prefix", placeholder:"**********" %>
+                <span class="ivu-input-prefix"><i class="ion ion-md-key"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Change password", class: 'mt-1 ivu-btn ivu-btn-primary ivu-btn-long ivu-btn-large' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+</div>

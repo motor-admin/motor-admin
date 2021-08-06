@@ -1,0 +1,56 @@
+{
+  "name": "motor-edge",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "^6.0.0-beta.7",
+    "@vue/compiler-sfc": "^3.2.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^5.1.0",
+    "css-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.1.0",
+    "node-sass": "^6.0.1",
+    "postcss": "^8.3.6",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^6.1.1",
+    "postcss-preset-env": "^6.7.0",
+    "sass": "^1.37.5",
+    "sass-loader": "^12.1.0",
+    "view3": "https://github.com/omohokcoj/view3#motor-admin",
+    "vue": "^3.2.0",
+    "vue-loader": "^16.4.1",
+    "vue-router": "^4.0.0",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0"
+  },
+  "scripts": {
+    "serve": "./node_modules/webpack/bin/webpack.js serve",
+    "build:dev": "./node_modules/webpack/bin/webpack.js",
+    "build:test": "./node_modules/webpack/bin/webpack.js --env test",
+    "build:prod": "./node_modules/webpack/bin/webpack.js --env production",
+    "eslint": "./node_modules/eslint/bin/eslint.js \"app/packs/**/*.{js,vue}\" --fix",
+    "stylelint": "./node_modules/stylelint/bin/stylelint.js \"app/packs/**/*.{scss,css}\" --fix"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "@webpack-cli/serve": "^1.5.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.15.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^7.15.2",
+    "stylelint": "^13.8.0",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-scss": "^3.0.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "babel": {
+    "presets": [
+      "./node_modules/@rails/webpacker/package/babel/preset.js"
+    ]
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}
