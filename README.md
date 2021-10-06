@@ -33,6 +33,20 @@ sudo chmod +x ./motor-admin
 ./motor-admin
 ```
 
+### Docker
+
+```bash
+docker run -it -p 3000:3000 -e SECRET_KEY_BASE=<sixty-four-characrets-length-key> -e DATABASE_URL=<postgres-db-url> motoradmin/motoradmin:latest
+```
+
+### Docker Compose
+
+```bash
+curl https://raw.githubusercontent.com/motor-admin/motor-admin/master/docker-compose.yml  | sed "s/SECRET_KEY_BASE:/SECRET_KEY_BASE: `openssl rand -hex 64`/" > docker-compose.yml
+
+docker-compose up
+```
+
 ## Features
 
 * [Customizable CRUD](#customizable-crud)

@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  app:
+    depends_on:
+      - 'postgres'
+    image: 'motoradmin/motoradmin:latest'
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/app'
+    environment:
+      SECRET_KEY_BASE:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/motoradmin
+
+  postgres:
+    image: 'postgres:13.4'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: motoradmin
+
+volumes:
+  postgres:

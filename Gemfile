@@ -19,6 +19,7 @@ gem 'oj'
 gem 'pg', require: false
 gem 'puma'
 gem 'sqlite3'
+gem 'tzinfo-data'
 gem 'webpacker'
 
 group :development, :test do
