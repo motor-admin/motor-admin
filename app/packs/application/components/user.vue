@@ -104,7 +104,7 @@ export default {
         mode: 'update',
         onSuccess: (data) => {
           this.$Modal.remove()
-          this.$Message.info(`${data.email} user has been added`)
+          this.$Message.info(`${data.email} user has been updated`)
 
           this.$emit('update')
         }
