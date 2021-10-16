@@ -72,10 +72,14 @@ module Motor
 
         class_name = name.classify
 
-        Object.const_get(class_name)
+        klass = begin
+          Object.const_get(class_name)
+        rescue NameError
+          nil
+        end
 
-        nil
-      rescue NameError
+        next if klass && ActiveRecord::Base.descendants.include?(klass)
+
         model = Class.new(ResourceRecord)
 
         DEFINED_MODELS[name] = model
