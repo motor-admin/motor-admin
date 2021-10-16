@@ -27,13 +27,6 @@ module Api
 
     private
 
-    def verify_db_connection!(url)
-      ::ActiveStorage::Record.establish_connection(url)
-      ::ResourceRecord.establish_connection(url)
-
-      ::ResourceRecord.connection.verify!
-    end
-
     def encrypted_config_params
       params[:data].to_unsafe_h.slice(:key, :value)
     end
