@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resource :setup, only: %i[create]
       resource :session, only: %i[destroy]
       resources :roles, only: %i[index]
+      resources :verify_db_connection, only: %i[create]
       resources :encrypted_configs, only: %i[show index create], param: 'key', constraints: { key: /.+/ }
       resources :admin_users, only: %i[index show create update destroy] do
         post :reset_password

@@ -57,6 +57,9 @@ Rails/SquishedSQLHeredocs:
 Rails/SkipsModelValidations:
   Enabled: false
 
+Rails/ApplicationRecord:
+  Enabled: false
+
 Rails/Output:
   Enabled: false
 

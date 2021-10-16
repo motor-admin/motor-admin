@@ -209,9 +209,6 @@ resources:
       name: reset_password_token
   updated_at: 2021-08-06 06:19:09.676790000 +00:00
 configs:
-- key: database.url
-  value: asdasdasd
-  updated_at: 2021-08-05 17:04:51.313813000 +00:00
 - key: header.links
   value:
   - name: "⭐ Star on GitHub"

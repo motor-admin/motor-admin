@@ -18,10 +18,6 @@ module Api
           config.value = @encrypted_config.value
         end
 
-      if @encrypted_config.key == Motor::EncryptedConfig::DATABASE_URL_KEY
-        verify_db_connection!(@encrypted_config.value)
-      end
-
       @encrypted_config.save!
 
       render json: { data: @encrypted_config }
@@ -39,7 +35,7 @@ module Api
     end
 
     def encrypted_config_params
-      params.require(:data).permit!
+      params[:data].to_unsafe_h.slice(:key, :value)
     end
   end
 end

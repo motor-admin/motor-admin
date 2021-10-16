@@ -180,13 +180,29 @@ export default {
     submit () {
       this.isLoading = true
 
-      api.post('encrypted_configs', {
-        data: {
-          key: 'database.url',
-          value: this.dataConfigs.url
-        }
-      }).then((result) => {
-        this.$emit('success', result.data.data)
+      api.post('verify_db_connection', {
+        url: this.dataConfigs.url
+      }).then(() => {
+        api.post('encrypted_configs', {
+          data: {
+            key: 'database.credentials',
+            value: [
+              { name: 'default', url: this.dataConfigs.url }
+            ]
+          }
+        }).then((result) => {
+          this.$emit('success', result.data.data)
+        }).catch((error) => {
+          if (error.response?.data?.errors) {
+            this.$refs.form.setErrors(error.response.data.errors)
+          } else if (error.message) {
+            this.$refs.form.setErrors([error.message])
+          }
+
+          this.$emit('error', error)
+        }).finally(() => {
+          this.isLoading = false
+        })
       }).catch((error) => {
         if (error.response?.data?.errors) {
           this.$refs.form.setErrors(error.response.data.errors)
@@ -195,7 +211,7 @@ export default {
         }
 
         this.$emit('error', error)
-      }).finally(() => {
+
         this.isLoading = false
       })
     },

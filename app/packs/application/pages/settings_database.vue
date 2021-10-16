@@ -46,8 +46,10 @@ export default {
   },
   methods: {
     loadConfigs () {
-      return api.get('encrypted_configs/database.url').then((result) => {
-        this.configs = { url: result.data.data.value, ...databaseUrlToObject(result.data.data.value) }
+      return api.get('encrypted_configs/database.credentials').then((result) => {
+        const dbUrl = result.data.data.value[0].url
+
+        this.configs = { url: dbUrl, ...databaseUrlToObject(dbUrl) }
       }).catch((error) => {
         console.error(error)
       })

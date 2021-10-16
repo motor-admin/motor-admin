@@ -6,9 +6,9 @@ ruby '2.7.1'
 
 gem 'rails', '~> 7.0.0.alpha'
 
-gem 'ar_lazy_preload', git: 'https://github.com/omohokcoj/ar_lazy_preload'
+gem 'ar_lazy_preload'
 gem 'audited'
-gem 'devise', git: 'https://github.com/strobilomyces/devise', branch: 'patch-1'
+gem 'devise', git: 'https://github.com/heartcombo/devise'
 gem 'dotenv'
 gem 'fast_blank'
 gem 'image_processing'

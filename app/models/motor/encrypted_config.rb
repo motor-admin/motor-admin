@@ -6,7 +6,7 @@ module Motor
 
     serialize :value, Motor::HashSerializer
 
-    DATABASE_URL_KEY = 'database.url'
+    DATABASE_CREDENTIALS_KEY = 'database.credentials'
     EMAIL_SMTP_KEY = 'email.smtp'
   end
 end
