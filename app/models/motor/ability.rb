@@ -8,7 +8,7 @@ module Motor
       return unless admin_user
 
       Motor::AdminUsers.load_permissions_from_cache(admin_user).each do |rule|
-        can rule[:actions].map(&:to_sym), rule[:subjects].map(&:to_sym)
+        can rule['actions'].map(&:to_sym), rule['subjects'].map(&:to_sym)
       end
     end
   end
