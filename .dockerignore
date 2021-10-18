@@ -24,5 +24,9 @@
 
 /config/master.key
 /public/packs-test
+/app/packs
 LICENSE
 .DS_Store
+motor-admin.env
+motor-admin.sqlite3
+/config/motor.yaml
