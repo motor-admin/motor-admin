@@ -2,7 +2,7 @@
   <img align="left" src="https://user-images.githubusercontent.com/5418788/136012355-7b7f3d90-90ad-421c-9d2e-44d79ade92dd.png" width="140" />
   <h1>Motor Admin</h1>
 
-🤓 [Live Demo](https://motor-admin.herokuapp.com/demo) | 👀 [Features overview](https://www.youtube.com/watch?v=ZD4Six8ZEP8) | ⭐ [Pro](https://www.getmotoradmin.com/pro)
+🤓 [Live Demo](https://motor-admin.herokuapp.com/demo) | 👀 [Features overview](https://www.youtube.com/watch?v=ZD4Six8ZEP8) | 💬 [Discord](https://discord.com/invite/mFFJKSTgw3) | ⭐ [Pro](https://www.getmotoradmin.com/pro)
 </p>
 
 <br>
@@ -58,6 +58,20 @@ docker-compose up
 * [Email alerts](#email-alerts)
 * [Intelligence search](#intelligence-search)
 * [Optimized for mobile](#optimized-for-mobile)
+
+## [Pro](https://www.getmotoradmin.com/pro)
+
+* Roles and permissions control
+* Multiple databases support
+* Audit log
+* Live collaboration
+* Multi-factor authentication
+* Custom styling
+* Personalized report alerts via Slack
+* Full-text search
+* Stripe integration
+* Shareable forms and reports
+* [learn more](https://www.getmotoradmin.com/pro)
 
 ### Customizable CRUD
 
