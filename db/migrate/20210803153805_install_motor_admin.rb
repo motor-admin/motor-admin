@@ -158,6 +158,48 @@ class InstallMotorAdmin < ActiveRecord::Migration[7.0]
                                                  name: '⭐ Star on GitHub',
                                                  path: 'https://github.com/motor-admin/motor-admin'
                                                }].to_json)
+
+    model.table_name = 'motor_queries'
+
+    model.create!(
+      name: 'Hello Query',
+      sql_body: "SELECT 'Hello there'",
+      preferences: { visualization: 'value' }.to_json
+    )
+
+    model.table_name = 'motor_dashboards'
+
+    model.create!(
+      title: 'Hello Dashboard',
+      preferences: {
+        layout: [
+          {
+            title: 'Hello',
+            query_id: 1,
+            size: '2x1'
+          }
+        ]
+      }.to_json
+    )
+
+    model.table_name = 'motor_forms'
+
+    model.create!(
+      name: 'Hello Form',
+      api_path: 'https://jsonplaceholder.typicode.com/todos',
+      http_method: 'POST',
+      preferences: {
+        'fields' => [
+          {
+            'display_name' => 'Message',
+            'name' => 'message',
+            'field_type' => 'richtext',
+            'validators' => [{ 'required' => true }],
+            'is_array' => false
+          }
+        ]
+      }.to_json
+    )
   end
 
   def self.down
