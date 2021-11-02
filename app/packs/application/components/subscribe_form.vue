@@ -101,7 +101,7 @@ export default {
     submit () {
       this.isLoading = true
 
-      axios.post('https://getsiteinspector.herokuapp.com/api/subscribers', {
+      axios.post('https://motor-admin.herokuapp.com/api/subscribe', {
         email: this.value.email
       }).then((result) => {
         localStorage.setItem('newsletter', JSON.stringify(result.data))
