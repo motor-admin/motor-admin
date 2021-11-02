@@ -29,7 +29,7 @@ sudo chmod +x ./motor-admin
 
 ```bash
 curl -o motor-admin -L https://github.com/motor-admin/motor-admin/releases/download/latest/motor-admin-Darwin-x86_64
-sudo chmod +x ./motor-admin
+chmod +x ./motor-admin
 ./motor-admin
 ```
 
