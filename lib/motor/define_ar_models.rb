@@ -31,6 +31,8 @@ module Motor
     ENUM_TYPE_VALUES_CACHE = HashWithIndifferentAccess.new
     TIMESTAMP_COLUMNS = %w[updated_at created_at].freeze
 
+    RUBY_CONSTANTS = Set.new(Object.constants.map(&:to_s)).freeze
+
     MUTEX = Mutex.new
 
     mattr_accessor :defined_models_connection_url
@@ -70,7 +72,8 @@ module Motor
       tables.filter_map do |name|
         next if EXCLUDE_TABLES.include?(name)
 
-        class_name = name.classify
+        class_name = name.underscore.classify
+        class_name = "Db#{class_name}" if RUBY_CONSTANTS.include?(class_name)
 
         klass = begin
           Object.const_get(class_name)
@@ -81,6 +84,7 @@ module Motor
         next if klass && ActiveRecord::Base.descendants.include?(klass)
 
         model = Class.new(ResourceRecord)
+        model.table_name = name
 
         DEFINED_MODELS[name] = model
 
