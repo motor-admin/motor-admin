@@ -22,9 +22,7 @@ Rails.configuration.to_prepare do
         demo_db_path = '/tmp/motor-admin-demo.sqlite3'
         demo_params = { adapter: :sqlite3, database: demo_db_path }
 
-        unless File.exists?(demo_db_path)
-          File.write(demo_db_path, Rails.root.join('motor-admin-demo.sqlite3').read)
-        end
+        File.write(demo_db_path, Rails.root.join('motor-admin-demo.sqlite3').read) unless File.exist?(demo_db_path)
 
         ::ActiveStorage::Record.establish_connection(demo_params)
         ::ResourceRecord.establish_connection(demo_params)

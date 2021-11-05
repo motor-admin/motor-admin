@@ -33,6 +33,11 @@ module Motor
 
     RUBY_CONSTANTS = Set.new(Object.constants.map(&:to_s)).freeze
 
+    PG_SELECT_TABLES_QUERY = <<~SQL.squish
+      select schemaname, tablename from pg_tables
+      where schemaname NOT IN ('pg_catalog', 'information_schema')
+    SQL
+
     MUTEX = Mutex.new
 
     mattr_accessor :defined_models_connection_url
@@ -40,7 +45,7 @@ module Motor
     module_function
 
     def call
-      tables = ResourceRecord.connection.tables
+      tables = load_tables(ResourceRecord.connection)
 
       MUTEX.synchronize do
         clear_models if current_connection_url != defined_models_connection_url
@@ -173,6 +178,22 @@ module Motor
 
     def fetch_table_indexes(model)
       TABLE_INDEXES_CACHE[model.table_name] ||= ResourceRecord.connection.indexes(model.table_name)
+    end
+
+    def load_tables(connection)
+      return ResourceRecord.connection.tables unless defined?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+
+      if connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+        ResourceRecord.connection.exec_query(PG_SELECT_TABLES_QUERY).rows.map do |schema, table|
+          if schema == 'public'
+            table
+          else
+            [schema, table].join('.')
+          end
+        end
+      else
+        ResourceRecord.connection.tables
+      end
     end
 
     def define_model_reflections(model)
