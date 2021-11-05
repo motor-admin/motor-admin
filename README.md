@@ -1,13 +1,13 @@
-<p>
-  <img align="left" src="https://user-images.githubusercontent.com/5418788/136012355-7b7f3d90-90ad-421c-9d2e-44d79ade92dd.png" width="140" />
-  <h1>Motor Admin</h1>
+<div align="center">
+
+[![Motor Admin](https://user-images.githubusercontent.com/5418788/140520844-a947845d-b579-4b3f-9b49-c539ad3cf580.png)](https://www.getmotoradmin.com)
+
+# Motor Admin
+
+### No-code Admin Panel and Business Intelligence tool
 
 🤓 [Live Demo](https://motor-admin.herokuapp.com/demo) | 👀 [Features overview](https://www.youtube.com/watch?v=ZD4Six8ZEP8) | 💬 [Discord](https://discord.com/invite/mFFJKSTgw3) | ⭐ [Pro](https://www.getmotoradmin.com/pro)
-</p>
-
-<br>
-
-Motor Admin is a self-hosted, open-source, no-code Admin Panel and Business Intelligence software.
+</div>
 
 Search, create, update, and delete data entries using a convenient UI. Create complex custom actions like sending an automated email to your customers via API integration. Build custom reports with SQL and visualize the results with charts. Combine individual reports into a single dashboard and share it with your team.
 
@@ -44,7 +44,7 @@ docker run -it -p 3000:3000 -e SECRET_KEY_BASE=<sixty-four-characrets-length-key
 ```bash
 curl https://raw.githubusercontent.com/motor-admin/motor-admin/master/docker-compose.yml  | sed "s/SECRET_KEY_BASE:/SECRET_KEY_BASE: `openssl rand -hex 64`/" > docker-compose.yml
 
-docker-compose up
+docker compose up
 ```
 
 ## Features
