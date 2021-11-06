@@ -12,6 +12,7 @@ gem 'devise', git: 'https://github.com/heartcombo/devise'
 gem 'dotenv'
 gem 'fast_blank'
 gem 'image_processing'
+gem 'jwt'
 gem 'lograge'
 gem 'motor-admin'
 gem 'mysql2', require: false
