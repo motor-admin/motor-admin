@@ -4,8 +4,8 @@ ENV RAILS_ENV=production
 
 WORKDIR /opt
 
-RUN apt update && apt install -y wget libsqlite3-dev && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y wget libsqlite3-dev libmysqlclient-dev libpq-dev && rm -rf /var/lib/apt/lists/*
 
-RUN wget -O motor-admin https://github.com/motor-admin/motor-admin/releases/download/latest/motor-admin-Linux-x86_64 && chmod +x ./motor-admin
+RUN wget -O motor-admin https://github.com/motor-admin/motor-admin/releases/download/latest/motor-admin-Linux-$(uname -m) && chmod +x ./motor-admin
 
 CMD ["/opt/motor-admin"]
