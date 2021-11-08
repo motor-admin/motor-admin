@@ -33,19 +33,23 @@ All custom forms are submitted with `Authorization` header which contains JWT th
 ```js
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const cors = require('cors')
 const app = express()
 
-app.use(cors())
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "authorization,content-type,x-csrf-token")
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+
+  next()
+})
 
 app.post('/custom_form_api_enpoint', (req, res) => {
-  [_, jwtToken] = req.headers.authorization.split(' ')
+  const [_, jwtToken] = req.headers.authorization.split(' ')
 
   jwt.verify(jwtToken, process.env.SECRET_KEY_BASE, (err, decoded) => {
     if (err) {
       res.send('Unauthorized')
     } else {
-      // authorized logic here
       res.send(decoded)
     }
   })
