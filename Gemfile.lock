@@ -281,9 +281,9 @@ DEPENDENCIES
   listen
   lograge
   motor-admin
-  mysql2
+  mysql2 (= 0.5.3)
   oj
-  pg
+  pg (= 1.2.3)
   pry-rails
   puma
   rails (~> 7.0.0.alpha)

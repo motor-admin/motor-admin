@@ -15,9 +15,9 @@ gem 'image_processing'
 gem 'jwt'
 gem 'lograge'
 gem 'motor-admin'
-gem 'mysql2', require: false
+gem 'mysql2', '0.5.3', require: false
 gem 'oj'
-gem 'pg', require: false
+gem 'pg', '1.2.3', require: false
 gem 'puma'
 gem 'sqlite3'
 gem 'tzinfo-data'
