@@ -21,10 +21,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install dependencies
-        working-directory: ./ui
         run: |
           yarn install
       - name: Run ESLint
-        working-directory: ./ui
         run: |
-          ./node_modules/eslint/bin/eslint.js "src/**/*.{js,vue}"
+          ./node_modules/eslint/bin/eslint.js "app/packs/**/*.{js,vue}"

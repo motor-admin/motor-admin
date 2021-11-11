@@ -20,10 +20,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install dependencies
-        working-directory: ./ui
         run: |
           yarn install
       - name: Run Stylelint
-        working-directory: ./ui
         run: |
-          ./node_modules/stylelint/bin/stylelint.js "src/**/*.{scss,css,less}"
+          ./node_modules/stylelint/bin/stylelint.js "app/packs/**/*.{scss,css,less}"
