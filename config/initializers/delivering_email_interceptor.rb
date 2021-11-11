@@ -11,7 +11,8 @@ module DynamicSettingsInterceptor
     message.delivery_method(:smtp, user_name: email_configs.value[:username],
                                    password: email_configs.value[:password],
                                    address: email_configs.value[:host],
-                                   port: email_configs.value[:port])
+                                   port: email_configs.value[:port],
+                                   tls: email_configs.value[:port].to_s == '465')
 
     message.from = email_configs.value[:address]
     message.reply_to = email_configs.value[:address]
