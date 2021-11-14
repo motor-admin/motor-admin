@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :admin_users, class_name: 'Motor::AdminUser', path: '/'
+  devise_for :admin_users, class_name: 'Motor::AdminUser', path: ENV.fetch('BASE_PATH', '/')
 
   scope ENV.fetch('BASE_PATH', '/'), as: :admin do
     with_options controller: 'ui' do
