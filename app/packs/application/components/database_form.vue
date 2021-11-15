@@ -30,7 +30,7 @@
         :label="option.value"
         border
         size="large"
-        :style="index === 0 ? 'margin-right: 25px !important' : ''"
+        :style="index !== 0 ? 'margin-left: 15px !important' : ''"
         class="my-1 me-0 w-100"
       >
         {{ option.label }}
@@ -149,7 +149,8 @@ export default {
     dbTypeOptions () {
       return [
         { label: 'PostgreSQL', value: 'postgres' },
-        { label: 'MySQL', value: 'mysql2' }
+        { label: 'MySQL', value: 'mysql2' },
+        { label: 'SQL Server', value: 'sqlserver' }
       ]
     }
   },

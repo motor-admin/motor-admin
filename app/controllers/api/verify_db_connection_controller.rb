@@ -17,21 +17,25 @@ module Api
     def verify_db_connection!(url)
       if url.starts_with?('postgres')
         PG.connect(url).close
+      elsif url.starts_with?('sqlserver')
+        TinyTds::Client.new(parse_options(url)).close
       elsif url.starts_with?('mysql')
-        uri = URI(url)
-
-        options = {
-          username: uri.user,
-          host: uri.host,
-          password: uri.password,
-          port: uri.port,
-          database: uri.path.delete_prefix('/')
-        }
-
-        Mysql2::Client.new(options).close
+        Mysql2::Client.new(parse_options(url)).close
       else
         raise InvalidUrl, 'Database URL is invalid'
       end
+    end
+
+    def parse_options(url)
+      uri = URI(url)
+
+      {
+        username: uri.user,
+        host: uri.host,
+        password: uri.password,
+        port: uri.port,
+        database: uri.path.delete_prefix('/')
+      }
     end
   end
 end

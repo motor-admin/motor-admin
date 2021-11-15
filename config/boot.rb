@@ -82,3 +82,10 @@ begin
 rescue LoadError
   false
 end
+
+begin
+  require 'tiny_tds'
+  require 'activerecord-sqlserver-adapter'
+rescue LoadError
+  false
+end
