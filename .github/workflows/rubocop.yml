@@ -12,7 +12,7 @@ jobs:
       - name: Install required package
         run: |
           sudo apt-get update
-          sudo apt-get -y install libpq-dev
+          sudo apt-get -y install libpq-dev freetds-dev
       - name: Cache gems
         uses: actions/cache@v1
         with:
