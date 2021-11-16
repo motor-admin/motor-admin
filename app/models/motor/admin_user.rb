@@ -6,5 +6,9 @@ module Motor
 
     has_many :admin_user_roles, dependent: :destroy
     has_many :roles, through: :admin_user_roles
+
+    def remember_me
+      true
+    end
   end
 end

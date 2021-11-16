@@ -31,6 +31,7 @@
           </div>
         </div>
         <div class="actions">
+          <%= f.hidden_field :remember_me, value: true %>
           <%= f.submit "Log in", class: 'mt-1 ivu-btn ivu-btn-primary ivu-btn-long ivu-btn-large' %>
         </div>
       <% end %>
