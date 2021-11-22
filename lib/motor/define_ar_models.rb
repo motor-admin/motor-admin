@@ -150,8 +150,8 @@ module Motor
     def define_model_many_to_many(model)
       ref_one, ref_two = model.reflections.values
 
-      ref_one_name = (ref_two.inverse_of.has_one? ? ref_one.name : ref_one.klass.table_name).to_sym
-      ref_two_name = (ref_one.inverse_of.has_one? ? ref_two.name : ref_two.klass.table_name).to_sym
+      ref_one_name = (ref_two.inverse_of.has_one? ? ref_one.name : ref_one.klass.table_name.split('.').first).to_sym
+      ref_two_name = (ref_one.inverse_of.has_one? ? ref_two.name : ref_two.klass.table_name.split('.').first).to_sym
 
       ref_one.klass.public_send(ref_one.inverse_of.has_one? ? :has_one : :has_many,
                                 ref_two_name, through: ref_one.inverse_of.name, inverse_of: ref_one_name)
@@ -181,18 +181,20 @@ module Motor
     end
 
     def load_tables(connection)
-      return ResourceRecord.connection.tables unless defined?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+      return connection.tables unless defined?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
 
       if connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-        ResourceRecord.connection.exec_query(PG_SELECT_TABLES_QUERY).rows.map do |schema, table|
-          if schema == 'public'
+        search_schemas = connection.schema_search_path.split(/\s*,\s*/)
+
+        connection.exec_query(PG_SELECT_TABLES_QUERY).rows.map do |schema, table|
+          if search_schemas.include?(schema)
             table
           else
             [schema, table].join('.')
           end
         end
       else
-        ResourceRecord.connection.tables
+        connection.tables
       end
     end
 
@@ -215,7 +217,7 @@ module Motor
 
     def define_model_reflection(model, ref_model, column, belongs_to_name)
       is_has_one = fetch_table_indexes(model).any? { |index| index.unique && index.columns == [column.name] }
-      inverse_of_name = (is_has_one ? model.name.underscore : model.table_name).to_sym
+      inverse_of_name = (is_has_one ? model.name.underscore : model.table_name.split('.').last).to_sym
 
       model.belongs_to(belongs_to_name, optional: column.null, inverse_of: inverse_of_name)
 

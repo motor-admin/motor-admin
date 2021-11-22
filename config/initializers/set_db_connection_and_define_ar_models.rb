@@ -12,11 +12,11 @@ Rails.configuration.to_prepare do
       database_configs = Motor::EncryptedConfig.find_by(key: Motor::EncryptedConfig::DATABASE_CREDENTIALS_KEY)
 
       if database_configs
-        database_url = database_configs.value.first['url']
+        database_config = database_configs.value.first
 
-        if database_url && ::ResourceRecord.connection_db_config.try(:url) != database_url
-          ::ActiveStorage::Record.establish_connection(database_url)
-          ::ResourceRecord.establish_connection(database_url)
+        if database_config['url'] && ::ResourceRecord.connection_db_config.try(:url) != database_config['url']
+          ::ActiveStorage::Record.establish_connection(database_config)
+          ::ResourceRecord.establish_connection(database_config)
         end
       else
         demo_db_path = '/tmp/motor-admin-demo.sqlite3'

@@ -49,7 +49,7 @@ export default {
       return api.get('encrypted_configs/database.credentials').then((result) => {
         const dbUrl = result.data.data.value[0].url
 
-        this.configs = { url: dbUrl, ...databaseUrlToObject(dbUrl) }
+        this.configs = { ...result.data.data.value[0], ...databaseUrlToObject(dbUrl) }
       }).catch((error) => {
         console.error(error)
       })

@@ -96,6 +96,17 @@
           @update:model-value="assignUrl"
         />
       </FormItem>
+      <FormItem
+        v-if="dataConfigs.protocol === 'postgres'"
+        prop="schema_search_path"
+        label="Schemas"
+        class="col-12"
+      >
+        <VInput
+          v-model="dataConfigs.schema_search_path"
+          placeholder="public, custom_schema"
+        />
+      </FormItem>
     </div>
     <VButton
       type="primary"
@@ -184,12 +195,16 @@ export default {
       api.post('verify_db_connection', {
         url: this.dataConfigs.url
       }).then(() => {
+        const dbConfig = { name: 'default', url: this.dataConfigs.url }
+
+        if (this.dataConfigs.schema_search_path.match(/\w/)) {
+          dbConfig.schema_search_path = this.dataConfigs.schema_search_path
+        }
+
         api.post('encrypted_configs', {
           data: {
             key: 'database.credentials',
-            value: [
-              { name: 'default', url: this.dataConfigs.url }
-            ]
+            value: [dbConfig]
           }
         }).then((result) => {
           this.$emit('success', result.data.data)
