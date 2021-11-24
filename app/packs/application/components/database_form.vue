@@ -197,7 +197,7 @@ export default {
       }).then(() => {
         const dbConfig = { name: 'default', url: this.dataConfigs.url }
 
-        if (this.dataConfigs.schema_search_path.match(/\w/)) {
+        if (this.dataConfigs.schema_search_path?.match(/\w/)) {
           dbConfig.schema_search_path = this.dataConfigs.schema_search_path
         }
 
