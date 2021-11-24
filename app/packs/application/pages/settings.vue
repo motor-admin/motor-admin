@@ -108,6 +108,7 @@ export default {
         { title: 'Roles', to: { name: 'roles_settings' } },
         { title: 'Database', to: { name: 'database_settings' } },
         { title: 'Email', to: { name: 'email_settings' } },
+        { title: 'Storage', to: { name: 'storage_settings' } },
         { title: 'Other', to: { name: 'other_settings' } }
       ]
     }

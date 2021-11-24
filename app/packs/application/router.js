@@ -7,6 +7,7 @@ import RolesSettingsPage from 'application/pages/settings_roles'
 import GeneralSettingsPage from 'application/pages/settings_general'
 import DatabaseSettingsPage from 'application/pages/settings_database'
 import EmailSettingsPage from 'application/pages/settings_email'
+import StorageSettingsPage from 'application/pages/settings_storage'
 import OtherSettingsPage from 'application/pages/settings_other'
 
 import { basePath } from 'application/scripts/configs'
@@ -47,6 +48,11 @@ const routes = [
         path: 'email',
         component: EmailSettingsPage,
         name: 'email_settings'
+      },
+      {
+        path: 'storage',
+        component: StorageSettingsPage,
+        name: 'storage_settings'
       },
       {
         path: 'other',

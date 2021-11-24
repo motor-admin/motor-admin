@@ -7,12 +7,10 @@ AllCops:
   NewCops: enable
   Exclude:
     - node_modules/**/*
-    - ui/node_modules/**/*
     - bin/*
     - vendor/**/*
     - gems/**/*
     - db/schema.rb
-    - lib/generators/motor/templates/**/*
     - Gemfile
   TargetRubyVersion: '3.0'
 

@@ -15,7 +15,6 @@ Rails.configuration.to_prepare do
         database_config = database_configs.value.first
 
         if database_config['url'] && ::ResourceRecord.connection_db_config.try(:url) != database_config['url']
-          ::ActiveStorage::Record.establish_connection(database_config)
           ::ResourceRecord.establish_connection(database_config)
         end
       else
@@ -23,8 +22,6 @@ Rails.configuration.to_prepare do
         demo_params = { adapter: :sqlite3, database: demo_db_path }
 
         File.write(demo_db_path, Rails.root.join('motor-admin-demo.sqlite3').read) unless File.exist?(demo_db_path)
-
-        ::ActiveStorage::Record.establish_connection(demo_params)
         ::ResourceRecord.establish_connection(demo_params)
       end
 

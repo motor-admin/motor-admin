@@ -42,3 +42,4 @@ yarn-debug.log*
 gems
 motor-admin.env
 motor-admin.sqlite3
+motor-admin-attachments

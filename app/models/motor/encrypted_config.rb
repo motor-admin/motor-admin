@@ -8,5 +8,6 @@ module Motor
 
     DATABASE_CREDENTIALS_KEY = 'database.credentials'
     EMAIL_SMTP_KEY = 'email.smtp'
+    FILES_STORAGE_KEY = 'files.storage'
   end
 end

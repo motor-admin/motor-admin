@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         resources :roles, only: %i[index]
         resource :database, only: %i[show]
         resource :email, only: %i[show]
+        resource :storage, only: %i[show]
         resource :other, only: %i[show]
       end
     end
