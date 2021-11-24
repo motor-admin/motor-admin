@@ -1,10 +1,10 @@
 local:
   service: Disk
-  root: ./motor-admin-attachments
+  root: <%= ENV['PWD'] %>/motor-admin-attachments
 
 disk:
   service: Disk
-  root: ./motor-admin-attachments
+  root: <%= ENV['PWD'] %>/motor-admin-attachments
 
 aws_s3:
   service: S3
