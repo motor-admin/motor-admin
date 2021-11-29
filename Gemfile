@@ -9,7 +9,7 @@ gem 'rails', '~> 7.0.0.alpha'
 gem 'activerecord-sqlserver-adapter', git: 'https://github.com/omohokcoj/activerecord-sqlserver-adapter', require: false
 gem 'ar_lazy_preload'
 gem 'audited'
-gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3'
 gem 'devise', git: 'https://github.com/heartcombo/devise'
 gem 'dotenv'
 gem 'fast_blank'
