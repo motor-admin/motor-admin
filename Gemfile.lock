@@ -164,6 +164,7 @@ GEM
       fugit (~> 1.0)
       rails (>= 5.2)
     mysql2 (0.5.3)
+    net_http_ssl_fix (0.0.10)
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
@@ -310,6 +311,7 @@ DEPENDENCIES
   lograge
   motor-admin
   mysql2 (= 0.5.3)
+  net_http_ssl_fix
   oj
   pg (= 1.2.3)
   pry-rails

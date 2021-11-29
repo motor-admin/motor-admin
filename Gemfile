@@ -18,6 +18,7 @@ gem 'jwt'
 gem 'lograge'
 gem 'motor-admin'
 gem 'mysql2', '0.5.3', require: false
+gem 'net_http_ssl_fix', require: 'net_http_ssl_fix'
 gem 'oj'
 gem 'pg', '1.2.3', require: false
 gem 'puma'
