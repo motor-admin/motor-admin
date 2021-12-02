@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.7.1'
+ruby '~> 2.7.1'
 
 gem 'rails', '~> 7.0.0.alpha'
 
