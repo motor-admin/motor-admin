@@ -126,7 +126,7 @@ module Motor
         ENUM_TYPE_VALUES_CACHE[column.sql_type] ||=
           model.pluck(Arel.sql("unnest(enum_range(NULL::#{column.sql_type}))::text")).uniq
 
-        model.validates_inclusion_of column.name, in: ENUM_TYPE_VALUES_CACHE[column.sql_type]
+        model.validates_inclusion_of column.name.to_sym, in: ENUM_TYPE_VALUES_CACHE[column.sql_type]
       end
     end
 
