@@ -58,6 +58,7 @@ docker compose up
 * [Email alerts](#email-alerts)
 * [Intelligence search](#intelligence-search)
 * [Optimized for mobile](#optimized-for-mobile)
+* [Configurations Sync](https://github.com/motor-admin/motor-admin/tree/master/guides/configurations_sync_between_environments.md)
 
 ## [Pro](https://www.getmotoradmin.com/pro)
 
