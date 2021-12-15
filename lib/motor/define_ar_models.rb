@@ -77,7 +77,7 @@ module Motor
       tables.filter_map do |name|
         next if EXCLUDE_TABLES.include?(name)
 
-        class_name = name.underscore.classify
+        class_name = name.underscore.tr(' ', '_').classify
         class_name = "Db#{class_name}" if RUBY_CONSTANTS.include?(class_name)
 
         klass = begin
