@@ -1,22 +1,18 @@
 #!/usr/bin/env ruby
 
 aliases = {
-  'g'  => 'generate',
-  'd'  => 'destroy',
-  'c'  => 'console',
   's'  => 'server',
-  'db' => 'dbconsole',
-  'r'  => 'runner',
-  't'  => 'test'
+  'sync' => 'config:sync',
+  'load' => 'config:load',
+  'dump' => 'config:dump'
 }
 
 command = ARGV.shift unless ARGV.first.to_s.start_with?('-')
 command = aliases[command] || command || 'server'
 
-puts '=> Starting Motor Admin - https://www.getmotoradmin.com/' if command == 'server'
+fail("Invalid command") unless aliases.value?(command)
 
 require 'dotenv'
-require 'irb' if command == 'console'
 
 dotenv_filename = 'motor-admin.env'
 
@@ -62,4 +58,21 @@ if command == 'server' && !ENV['SSL_KEY_PATH'].to_s.empty?
   ARGV.push('-b', "ssl://0.0.0.0:#{ENV.fetch('PORT', 3000)}?key=#{ENV['SSL_KEY_PATH']}&cert=#{ENV['SSL_CERT_PATH']}")
 end
 
-Rails::Command.invoke(command, ARGV)
+
+if command == 'server'
+  puts '=> Starting Motor Admin - https://www.getmotoradmin.com/'
+  Rails::Command.invoke(command, ARGV)
+else
+  require_relative '../config/application'
+
+  Rails.application.require_environment!
+
+  case command
+  when 'config:sync'
+    Motor::ConfigsCli.sync
+  when 'config:load'
+    Motor::ConfigsCli.load
+  when 'config:dump'
+    Motor::ConfigsCli.dump
+  end
+end
