@@ -36,7 +36,7 @@ chmod +x ./motor-admin
 ### Docker
 
 ```bash
-docker run -it -p 3000:3000 -e SECRET_KEY_BASE=<sixty-four-character-length-key> -e DATABASE_URL=<postgres-db-url> motoradmin/motoradmin:latest
+docker run -it -p 3000:3000 -v `pwd`:/app -e SECRET_KEY_BASE=<sixty-four-character-length-key> -e DATABASE_URL=<postgres-db-url> motoradmin/motoradmin:latest
 ```
 
 ### Docker Compose

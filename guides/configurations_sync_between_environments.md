@@ -8,14 +8,22 @@ It's possible to sync local development admin panel configurations with remote p
 MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ MOTOR_SYNC_API_KEY=secure-random-string ./motor-admin sync
 ```
 
-### Docker
+### Docker Git
+
+Docker container should be run with mounted volume in order to access `motor-admin.yml` configs file for git version control:
 
 ```bash
-docker run -it -e MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ -e MOTOR_SYNC_API_KEY=secure-random-string motoradmin/motoradmin:latest ./motor-admin sync
+docker run -it -p 3000:3000 -v `pwd`:/app motoradmin/motoradmin:latest
 ```
 
-### Docker Compose
+### Docker Sync
 
 ```bash
-docker compose run app ./motor-admin sync
+docker run -it -e MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ -e MOTOR_SYNC_API_KEY=secure-random-string motoradmin/motoradmin:latest motor-admin sync
+```
+
+### Docker Compose Sync
+
+```bash
+docker compose run app motor-admin sync
 ```
