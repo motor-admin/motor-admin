@@ -4,13 +4,13 @@ source 'https://rubygems.org'
 
 ruby '2.7.1'
 
-gem 'rails', '~> 7.0.0.alpha'
+gem 'rails'
 
 gem 'activerecord-sqlserver-adapter', git: 'https://github.com/omohokcoj/activerecord-sqlserver-adapter', require: false
 gem 'ar_lazy_preload'
 gem 'audited'
 gem 'aws-sdk-s3'
-gem 'devise', git: 'https://github.com/heartcombo/devise'
+gem 'devise'
 gem 'dotenv'
 gem 'fast_blank'
 gem 'image_processing'
