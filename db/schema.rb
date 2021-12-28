@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_011025) do
+ActiveRecord::Schema.define(version: 2021_12_28_142855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,18 @@ ActiveRecord::Schema.define(version: 2021_11_24_011025) do
     t.index ["updated_at"], name: "index_motor_alerts_on_updated_at"
   end
 
+  create_table "motor_api_configs", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "url", null: false
+    t.text "preferences", null: false
+    t.text "credentials", null: false
+    t.text "description"
+    t.datetime "deleted_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "motor_api_configs_name_unique_index", unique: true, where: "(deleted_at IS NULL)"
+  end
+
   create_table "motor_audits", force: :cascade do |t|
     t.bigint "auditable_id"
     t.string "auditable_type"
@@ -167,6 +179,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_011025) do
     t.datetime "deleted_at", precision: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "api_config_name", null: false
     t.index ["name"], name: "motor_forms_name_unique_index", unique: true, where: "(deleted_at IS NULL)"
     t.index ["updated_at"], name: "index_motor_forms_on_updated_at"
   end
