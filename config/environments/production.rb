@@ -49,7 +49,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = [ENV['FORCE_SSL'], ENV['MOTOR_FORCE_SSL']].any?('true') || ENV['SSL_KEY_PATH'].present?
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -83,8 +83,6 @@ Rails.application.configure do
 
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
-
-  config.force_ssl = ENV['SSL_KEY_PATH'].present?
 
   if ENV['HOST'].present?
     routes.default_url_options = {
