@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
   class MotorApiConfig < ActiveRecord::Base
     self.table_name = 'motor_api_configs'
@@ -35,9 +38,9 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
       t.timestamps
 
       t.index 'name',
-        name: 'motor_api_configs_name_unique_index',
-        unique: true,
-        where: 'deleted_at IS NULL'
+              name: 'motor_api_configs_name_unique_index',
+              unique: true,
+              where: 'deleted_at IS NULL'
     end
 
     add_column :motor_forms, :api_config_name, :string
@@ -80,3 +83,4 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
     drop_table :motor_api_configs
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
