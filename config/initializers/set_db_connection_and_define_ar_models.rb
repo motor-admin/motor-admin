@@ -18,11 +18,12 @@ Rails.configuration.to_prepare do
           ::ResourceRecord.establish_connection(database_config)
         end
       else
-        demo_db_path = '/tmp/motor-admin-demo.sqlite3'
-        demo_params = { adapter: :sqlite3, database: demo_db_path }
+        db_path = "#{ENV['PWD']}/database.sqlite3"
+        db_path = '/tmp/motor-admin-demo.sqlite3' unless File.exist?(db_path)
 
-        File.write(demo_db_path, Rails.root.join('motor-admin-demo.sqlite3').read) unless File.exist?(demo_db_path)
-        ::ResourceRecord.establish_connection(demo_params)
+        File.write(db_path, Rails.root.join('motor-admin-demo.sqlite3').read) unless File.exist?(db_path)
+
+        ::ResourceRecord.establish_connection(adapter: :sqlite3, database: db_path)
       end
 
       Motor::DefineArModels.call
