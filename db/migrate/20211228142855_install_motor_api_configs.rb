@@ -2,28 +2,34 @@
 
 # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
-  class MotorApiConfig < ActiveRecord::Base
-    self.table_name = 'motor_api_configs'
+  def _MotorApiConfig
+    @_MotorApiConfig ||= Class.new(ActiveRecord::Base) do
+      self.table_name = 'motor_api_configs'
 
-    encrypts :credentials
+      encrypts :credentials
 
-    serialize :credentials, Motor::HashSerializer
-    serialize :preferences, Motor::HashSerializer
+      serialize :credentials, Motor::HashSerializer
+      serialize :preferences, Motor::HashSerializer
 
-    attribute :preferences, default: -> { HashWithIndifferentAccess.new }
-    attribute :credentials, default: -> { HashWithIndifferentAccess.new }
+      attribute :preferences, default: -> { HashWithIndifferentAccess.new }
+      attribute :credentials, default: -> { HashWithIndifferentAccess.new }
+    end
   end
 
-  class MotorForm < ActiveRecord::Base
-    self.table_name = 'motor_forms'
+  def _MotorForm
+    @_MotorForm ||= Class.new(ActiveRecord::Base) do
+      self.table_name = 'motor_forms'
 
-    serialize :preferences, Motor::HashSerializer
+      serialize :preferences, Motor::HashSerializer
+    end
   end
 
-  class MotorQuery < ActiveRecord::Base
-    self.table_name = 'motor_queries'
+  def _MotorQuery
+    @_MotorQuery ||= Class.new(ActiveRecord::Base) do
+      self.table_name = 'motor_queries'
 
-    serialize :preferences, Motor::HashSerializer
+      serialize :preferences, Motor::HashSerializer
+    end
   end
 
   def up
@@ -45,25 +51,25 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
 
     add_column :motor_forms, :api_config_name, :string
 
-    MotorForm.reset_column_information
+    _MotorForm.reset_column_information
 
-    MotorForm.all.each do |form|
+    _MotorForm.all.each do |form|
       if form.api_path.starts_with?('http')
         url = form.api_path[%r{\Ahttps?://[^/]+}]
 
         if form.preferences[:default_values_api_path].present?
           form.preferences[:default_values_api_path] =
-            form.preferences[:default_values_api_path].delete_prefix(url).sub(/\A\/?/, '/')
+            form.preferences[:default_values_api_path].delete_prefix(url).sub(%r{\A/?}, '/')
         end
 
-        form.update!(api_config_name: MotorApiConfig.find_or_create_by!(name: url, url: url).name,
-                     api_path: form.api_path.delete_prefix(url).sub(/\A\/?/, '/'))
+        form.update!(api_config_name: _MotorApiConfig.find_or_create_by!(name: url, url: url).name,
+                     api_path: form.api_path.delete_prefix(url).sub(%r{\A/?}, '/'))
       else
-        form.update!(api_config_name: MotorApiConfig.find_or_create_by!(name: 'origin', url: '/').name)
+        form.update!(api_config_name: _MotorApiConfig.find_or_create_by!(name: 'origin', url: '/').name)
       end
     end
 
-    MotorQuery.all.each do |query|
+    _MotorQuery.all.each do |query|
       next if query.preferences['api_path'].blank?
 
       if query.preferences['api_path'].starts_with?('http')
@@ -71,9 +77,9 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
 
         query.preferences['api_path'].delete(url)
 
-        query.preferences['api_config_name'] = MotorApiConfig.find_or_create_by!(name: url, url: url).name
+        query.preferences['api_config_name'] = _MotorApiConfig.find_or_create_by!(name: url, url: url).name
       else
-        query.preferences['api_config_name'] = MotorApiConfig.find_or_create_by!(name: 'origin', url: '/').name
+        query.preferences['api_config_name'] = _MotorApiConfig.find_or_create_by!(name: 'origin', url: '/').name
       end
 
       query.save!
@@ -81,7 +87,7 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
 
     change_column_null :motor_forms, :api_config_name, false
 
-    MotorApiConfig.find_or_create_by!(name: 'origin', url: '/')
+    _MotorApiConfig.find_or_create_by!(name: 'origin', url: '/')
   end
 
   def down
