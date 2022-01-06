@@ -186,12 +186,8 @@ module Motor
       if connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
         search_schemas = connection.schema_search_path.split(/\s*,\s*/)
 
-        connection.exec_query(PG_SELECT_TABLES_QUERY).rows.map do |schema, table|
-          if search_schemas.include?(schema)
-            table
-          else
-            [schema, table].join('.')
-          end
+        connection.exec_query(PG_SELECT_TABLES_QUERY).rows.filter_map do |schema, table|
+          table if search_schemas.blank? || search_schemas.include?(schema)
         end
       else
         connection.tables
