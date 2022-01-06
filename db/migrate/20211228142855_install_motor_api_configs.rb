@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Naming/MethodName, Naming/VariableName
 class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
   def _MotorApiConfig
     @_MotorApiConfig ||= Class.new(ActiveRecord::Base) do
@@ -95,4 +95,4 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
     drop_table :motor_api_configs
   end
 end
-# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Naming/MethodName, Naming/VariableName
