@@ -38,17 +38,23 @@ module Motor
       where schemaname NOT IN ('pg_catalog', 'information_schema')
     SQL
 
+    PG_SELECT_SCHEMA_MD5 = <<~SQL.squish
+      SELECT md5(array_agg(t)::text) FROM information_schema.columns as t WHERE table_schema IN (:schema)
+    SQL
+
     MUTEX = Mutex.new
 
-    mattr_accessor :defined_models_connection_url
+    mattr_accessor :defined_models_schema_md5
 
     module_function
 
     def call
+      schema_md5 = fetch_schemas_md5(ResourceRecord.connection)
+
       tables = load_tables(ResourceRecord.connection)
 
       MUTEX.synchronize do
-        clear_models if current_connection_url != defined_models_connection_url
+        clear_models if schema_md5 != defined_models_schema_md5
 
         define_models(tables).each do |model|
           next unless model.table_exists?
@@ -59,11 +65,13 @@ module Motor
           define_model_many_to_many(model) if join_table_model?(model)
         end
 
-        self.defined_models_connection_url = current_connection_url
+        self.defined_models_schema_md5 = schema_md5
       end
     end
 
     def clear_models
+      ResourceRecord.connection.schema_cache.clear!
+
       DEFINED_MODELS.each_value { |klass| Object.send(:remove_const, klass.name) }
 
       DEFINED_MODELS.clear
@@ -192,6 +200,16 @@ module Motor
       else
         connection.tables
       end
+    end
+
+    def fetch_schemas_md5(connection)
+      return Digest::MD5.hexdigest('') unless defined?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+
+      schemas = connection.schema_search_path.split(/\s*,\s*/).presence || ['public']
+
+      sql = ActiveRecord::Base.sanitize_sql_array([PG_SELECT_SCHEMA_MD5, { schema: schemas }])
+
+      connection.exec_query(sql).rows.first.first
     end
 
     def define_model_reflections(model)
