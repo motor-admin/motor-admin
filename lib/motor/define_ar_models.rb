@@ -43,6 +43,10 @@ module Motor
       SELECT md5(string_agg(t::text, '')::text) FROM information_schema.columns as t WHERE table_schema IN (:schema)
     SQL
 
+    MYSQL_SELECT_SCHEMA_MD5 = <<~SQL.squish
+      SELECT * FROM information_schema.columns WHERE table_schema IN (:schema)
+    SQL
+
     MUTEX = Mutex.new
 
     mattr_accessor :defined_models_schema_md5
@@ -204,13 +208,29 @@ module Motor
     end
 
     def fetch_schemas_md5(connection)
-      return Digest::MD5.hexdigest('') unless defined?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+      if connection.class.name.include?('PostgreSQL')
+        fetch_pg_schema_md5(connection)
+      elsif connection.class.name.include?('Mysql2')
+        fetch_mysql_schema_md5(connection)
+      else
+        Digest::MD5.hexdigest('')
+      end
+    end
 
+    def fetch_pg_schema_md5(connection)
       schemas = connection.schema_search_path.split(/\s*,\s*/).presence || ['public']
 
       sql = ActiveRecord::Base.sanitize_sql_array([PG_SELECT_SCHEMA_MD5, { schema: schemas }])
 
       connection.exec_query(sql).rows.first.first
+    end
+
+    def fetch_mysql_schema_md5(connection)
+      schema = connection.connection_class.connection_db_config.configuration_hash[:database]
+
+      sql = ActiveRecord::Base.sanitize_sql_array([MYSQL_SELECT_SCHEMA_MD5, { schema: schema }])
+
+      Digest::MD5.hexdigest(connection.exec_query(sql).rows.to_json)
     end
 
     def define_model_reflections(model)
