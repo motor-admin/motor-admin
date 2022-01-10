@@ -40,7 +40,7 @@ module Motor
     SQL
 
     PG_SELECT_SCHEMA_MD5 = <<~SQL.squish
-      SELECT md5(array_agg(t)::text) FROM information_schema.columns as t WHERE table_schema IN (:schema)
+      SELECT md5(string_agg(t::text, '')::text) FROM information_schema.columns as t WHERE table_schema IN (:schema)
     SQL
 
     MUTEX = Mutex.new
