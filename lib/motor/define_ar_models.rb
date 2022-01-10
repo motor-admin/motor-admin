@@ -17,6 +17,7 @@ module Motor
         motor_roles
         motor_taggable_tags
         motor_tags
+        motor_api_configs
         active_storage_attachments
         ar_internal_metadata
         motor_audits
