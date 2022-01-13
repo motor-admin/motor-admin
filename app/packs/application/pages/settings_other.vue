@@ -17,6 +17,9 @@
         <option value="es">
           Español
         </option>
+        <option value="el">
+          Ελληνικά
+        </option>
       </select>
     </div>
     <Divider />
