@@ -1,6 +1,6 @@
 # Custom resource details page
 
-## [Demo](https://motor-admin.herokuapp.com/demo/data/countries/1)
+## [Demo](https://motor-admin.herokuapp.com/demo/queries/17?country_id=15)
 
 It's possible to create a completely custom resource page via SQL queries with markdown visualization and tabs.
 

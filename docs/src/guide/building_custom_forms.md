@@ -35,14 +35,6 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const app = express()
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "authorization,content-type,x-csrf-token")
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-
-  next()
-})
-
 app.post('/custom_form_api_enpoint', (req, res) => {
   const [_, jwtToken] = req.headers.authorization.split(' ')
 
