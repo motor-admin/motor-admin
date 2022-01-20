@@ -195,7 +195,7 @@ export default {
       api.post('verify_db_connection', {
         url: this.dataConfigs.url
       }).then(() => {
-        const dbConfig = { name: 'default', url: this.dataConfigs.url }
+        const dbConfig = { name: 'default', url: this.dataConfigs.url.replace('mysql://', 'mysql2://').replace('postgresql://', 'postgres://') }
 
         if (this.dataConfigs.schema_search_path?.match(/\w/)) {
           dbConfig.schema_search_path = this.dataConfigs.schema_search_path
