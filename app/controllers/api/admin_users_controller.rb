@@ -42,7 +42,7 @@ module Api
 
       authorize!(:manage, @admin_user)
 
-      Devise::Mailer.default_url_options = { host: request.host, protocol: request.protocol, port: request.port }
+      Devise::Mailer.default_url_options = { host: ENV['HOST'], protocol: request.protocol, port: request.port }
 
       @admin_user.send_reset_password_instructions
 

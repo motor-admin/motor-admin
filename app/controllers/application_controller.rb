@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_admin_user!, unless: :setup_path?
 
   before_action do
-    Devise::Mailer.default_url_options = { host: request.host, protocol: request.protocol, port: request.port }
+    Devise::Mailer.default_url_options = { host: ENV['HOST'], protocol: request.protocol, port: request.port }
   end
 
   private
