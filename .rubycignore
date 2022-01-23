@@ -13,6 +13,7 @@ gems/*/*/test
 gems/*/guides
 gems/*/docs
 gems/*/images
+docs
 motor-admin.env
 motor-admin.sqlite3
 motor.yml
