@@ -17,3 +17,6 @@ docs
 motor-admin.env
 motor-admin.sqlite3
 motor.yml
+Darwin-x86_64
+Linux-x86_64
+Linux-aarch64

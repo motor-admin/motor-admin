@@ -43,3 +43,6 @@ gems
 motor-admin.env
 motor-admin.sqlite3
 motor-admin-attachments
+Darwin-x86_64
+Linux-x86_64
+Linux-aarch64
