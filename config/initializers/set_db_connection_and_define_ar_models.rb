@@ -15,7 +15,7 @@ Rails.configuration.to_prepare do
         database_config = database_configs.value.first
 
         if database_config['url'] && ::ResourceRecord.connection_db_config.try(:url) != database_config['url']
-          ::ResourceRecord.establish_connection(database_config)
+          ::ResourceRecord.establish_connection(database_config.merge(prepared_statements: false))
         end
       else
         db_path = "#{ENV['PWD']}/database.sqlite3"
