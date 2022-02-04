@@ -18,6 +18,11 @@ module Motor
         motor_taggable_tags
         motor_tags
         motor_api_configs
+        motor_note_tag_tags
+        motor_note_tags
+        motor_notes
+        motor_notifications
+        motor_reminders
         active_storage_attachments
         ar_internal_metadata
         motor_audits
