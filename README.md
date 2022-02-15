@@ -17,6 +17,10 @@ Search, create, update, and delete data entries using a convenient UI. Create co
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/motor-admin/motor-admin-heroku)
 
+### Railway
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fmotor-admin%2Fmotor-admin-railway&plugins=postgresql&envs=SECRET_KEY_BASE&SECRET_KEY_BASEDesc=64+character+secret&PORTDefault=secret&referralCode=DSdLCm)
+
 ### Ubuntu
 
 ```bash
