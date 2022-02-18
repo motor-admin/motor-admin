@@ -10,4 +10,6 @@ RUN apt update && apt install -y wget libsqlite3-dev libmysqlclient-dev libpq-de
 
 RUN wget -O motor-admin https://github.com/motor-admin/motor-admin/releases/download/latest/motor-admin-Linux-$(uname -m) && chmod +x ./motor-admin && mv ./motor-admin /usr/bin
 
+EXPOSE 3000
+
 CMD ["/bin/sh" , "-c" , "cd /app && motor-admin"]
