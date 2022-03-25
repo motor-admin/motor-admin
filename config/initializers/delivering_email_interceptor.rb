@@ -12,7 +12,8 @@ module DynamicSettingsInterceptor
                                    password: email_configs.value[:password],
                                    address: email_configs.value[:host],
                                    port: email_configs.value[:port],
-                                   tls: email_configs.value[:port].to_s == '465')
+                                   tls: email_configs.value[:port].to_s == '465',
+                                   ca_file: '/tmp/motor-admin.pem')
 
     message.from = email_configs.value[:address]
     message.reply_to = email_configs.value[:address]
