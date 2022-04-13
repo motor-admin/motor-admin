@@ -12,3 +12,9 @@ aws_s3:
   secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   region: <%= ENV['AWS_REGION'] %>
   bucket: <%= ENV['S3_ATTACHMENTS_BUCKET'] %>
+
+google:
+  service: GCS
+  credentials: <%= JSON.parse(ENV['GCS_CREDENTIALS'] || '{}') %>
+  project: <%= ENV['GCS_PROJECT'] %>
+  bucket: <%= ENV['GCS_BUCKET'] %>

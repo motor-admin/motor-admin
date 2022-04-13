@@ -18,6 +18,11 @@ module SetActiveStorageConfigs
     active_storage.service = configs.value[:service].to_sym
     active_storage.service_configurations[configs.value[:service]].merge!(configs.value[:configs])
 
+    if configs.value[:service] == 'google'
+      active_storage.service_configurations[configs.value[:service]][:credentials] =
+        JSON.parse(configs.value[:configs].fetch(:credentials, '{}'))
+    end
+
     ActiveStorage::Blob.services =
       ActiveStorage::Service::Registry.new(active_storage.service_configurations)
 
