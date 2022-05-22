@@ -4,6 +4,10 @@ module Api
   class EncryptedConfigsController < ApiBaseController
     load_and_authorize_resource class: 'Motor::EncryptedConfig', id_param: :key, find_by: :key
 
+    rescue_from ActiveRecord::RecordNotFound do
+      head :not_found
+    end
+
     def index
       render json: { data: @encrypted_configs }
     end

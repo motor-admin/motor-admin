@@ -48,6 +48,18 @@
           placeholder="s3-bucket-name"
         />
       </FormItem>
+      <FormItem
+        prop="endpoint"
+        label="Endpoint"
+        class="col-12"
+      >
+        <VInput
+          v-model="configs.endpoint"
+          type="text"
+          placeholder=""
+        />
+        <small>Use custom endoint for S3 compatible API like MinIO. Leave it blank for AWS S3</small>
+      </FormItem>
     </div>
     <VButton
       type="primary"

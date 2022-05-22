@@ -54,7 +54,7 @@ export default {
   computed: {
     serviceOptions () {
       return [
-        { label: 'AWS S3', value: 'aws_s3' },
+        { label: 'S3', value: 'aws_s3' },
         { label: 'Google Cloud', value: 'google' }
       ]
     }

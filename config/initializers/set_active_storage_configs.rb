@@ -18,6 +18,10 @@ module SetActiveStorageConfigs
     active_storage.service = configs.value[:service].to_sym
     active_storage.service_configurations[configs.value[:service]].merge!(configs.value[:configs])
 
+    if configs.value[:configs][:endpoint].present?
+      active_storage.service_configurations[configs.value[:service]][:force_path_style] = true
+    end
+
     if configs.value[:service] == 'google'
       active_storage.service_configurations[configs.value[:service]][:credentials] =
         JSON.parse(configs.value[:configs].fetch(:credentials, '{}'))
