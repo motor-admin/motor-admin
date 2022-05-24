@@ -50,7 +50,8 @@ module.exports = {
             'custom_resource_details_page.md',
             'file_attachments.md',
             'building_custom_forms.md',
-            'configurations_sync_between_environments.md'
+            'configurations_sync_between_environments.md',
+            'roles_and_permissions.md'
           ]
         }
       ],
