@@ -25,6 +25,9 @@ Metrics/BlockLength:
 Style/Documentation:
   Enabled: false
 
+Style/FetchEnvVar:
+  Enabled: false
+
 Metrics/MethodLength:
   Max: 20
 

@@ -85,6 +85,7 @@ end
 
 begin
   require 'tiny_tds'
+  require 'active_support/core_ext/kernel'
   require 'activerecord-sqlserver-adapter'
 rescue LoadError
   false

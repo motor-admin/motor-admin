@@ -6,7 +6,7 @@ ruby '3.1.0'
 
 gem 'rails'
 
-gem 'activerecord-sqlserver-adapter', git: 'https://github.com/omohokcoj/activerecord-sqlserver-adapter', require: false
+gem 'activerecord-sqlserver-adapter', require: false
 gem 'ar_lazy_preload'
 gem 'audited'
 gem 'aws-sdk-s3'
