@@ -6,7 +6,7 @@ bundle inst
 
 rm -rf public/packs
 
-SECRET_KEY_BASE=`openssl rand -hex 50` RAILS_ENV=production rake assets:precompile
+RAILS_ENV=production ./bin/webpacker
 
 ../ruby-packer/bin/rubyc ./bin/motor-admin
 

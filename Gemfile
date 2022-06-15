@@ -26,7 +26,7 @@ gem 'puma'
 gem 'sqlite3'
 gem 'tiny_tds', '2.1.5', require: false
 gem 'tzinfo-data'
-gem 'webpacker'
+gem 'shakapacker'
 
 group :development, :test do
   gem 'brakeman', require: false

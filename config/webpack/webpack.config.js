@@ -1,9 +1,9 @@
-const { webpackConfig, merge } = require('@rails/webpacker')
+const { webpackConfig, merge } = require('shakapacker')
 const { VueLoaderPlugin } = require('vue-loader')
 
 const configs = merge({
   resolve: {
-    extensions: ['.vue', '.css', '.scss'],
+    extensions: ['.vue', '.css', '.scss']
   },
   module: {
     rules: [
@@ -27,7 +27,7 @@ const configs = merge({
         test: /\.scss$/,
         use: [
           'postcss-loader',
-          'sass-loader',
+          'sass-loader'
         ]
       }
     ]
