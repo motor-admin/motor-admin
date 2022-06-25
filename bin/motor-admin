@@ -4,6 +4,7 @@ aliases = {
   's'  => 'server',
   'sync' => 'config:sync',
   'load' => 'config:load',
+  'reload' => 'config:reload',
   'dump' => 'config:dump'
 }
 
@@ -72,6 +73,8 @@ else
     Motor::ConfigsCli.sync
   when 'config:load'
     Motor::ConfigsCli.load
+  when 'config:reload'
+    Motor::ConfigsCli.reload
   when 'config:dump'
     Motor::ConfigsCli.dump
   end

@@ -18,6 +18,15 @@ module Motor
       puts '✅ configs have been loaded from motor.yml'
     end
 
+    def reload
+      ActiveRecord::Base.transaction do
+        Motor::Configs.clear
+        Motor::Configs::SyncFromFile.call(with_exception: true)
+      end
+
+      puts '✅ configs have been re-loaded from motor.yml'
+    end
+
     def sync
       remote_url = ENV['MOTOR_SYNC_REMOTE_URL']
       api_key = ENV['MOTOR_SYNC_API_KEY']
