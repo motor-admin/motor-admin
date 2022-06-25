@@ -11,3 +11,8 @@ spec:
       value: "- 64 characters string 64 characters string 64 characters string -"
       type: SECRET
       scope: RUN_TIME
+    - key: DATABASE_URL
+      scope: RUN_TIME
+      value: ${motor-admin-db.DATABASE_URL}
+  databases:
+  - name: motor-admin-db
