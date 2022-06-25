@@ -23,7 +23,7 @@ Search, create, update, and delete data entries using a convenient UI. Create co
 
 ### Digital Ocean
 
-[![Deploy on Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/motor-admin/motor-admin/tree/do&refcode=33c75473a82d)
+[![Deploy on Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/motor-admin/motor-admin/tree/master&refcode=33c75473a82d)
 
 ### Ubuntu
 

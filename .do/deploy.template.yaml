@@ -10,3 +10,4 @@ spec:
     - key: SECRET_KEY_BASE
       value: "- 64 characters string 64 characters string 64 characters string -"
       type: SECRET
+      scope: RUN_TIME
