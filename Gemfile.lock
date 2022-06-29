@@ -197,7 +197,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.1)
-    motor-admin (0.2.81)
+    motor-admin (0.2.82)
       activerecord-filter (>= 5.2)
       ar_lazy_preload (~> 1.0)
       audited (~> 5.0)
