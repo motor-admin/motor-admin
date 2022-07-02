@@ -19,14 +19,14 @@ gem 'jwt'
 gem 'lograge'
 gem 'motor-admin'
 gem 'mysql2', '0.5.3', require: false
-gem 'net_http_ssl_fix', require: 'net_http_ssl_fix'
+gem 'net_http_ssl_fix', github: 'motor-admin/net_http_ssl_fix', require: 'net_http_ssl_fix'
 gem 'oj'
 gem 'pg', '1.2.3', require: false
 gem 'puma'
+gem 'shakapacker'
 gem 'sqlite3'
 gem 'tiny_tds', '2.1.5', require: false
 gem 'tzinfo-data'
-gem 'shakapacker'
 
 group :development, :test do
   gem 'brakeman', require: false

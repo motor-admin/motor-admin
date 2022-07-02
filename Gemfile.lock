@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/motor-admin/net_http_ssl_fix.git
+  revision: dff050f8d0b42f4cb710f40b8ebdfcdfc7431976
+  specs:
+    net_http_ssl_fix (0.0.11)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -220,7 +226,6 @@ GEM
       digest
       net-protocol
       timeout
-    net_http_ssl_fix (0.0.10)
     nio4r (2.5.8)
     nokogiri (1.13.6)
       mini_portile2 (~> 2.8.0)
@@ -378,7 +383,7 @@ DEPENDENCIES
   lograge
   motor-admin
   mysql2 (= 0.5.3)
-  net_http_ssl_fix
+  net_http_ssl_fix!
   oj
   pg (= 1.2.3)
   pry-rails
