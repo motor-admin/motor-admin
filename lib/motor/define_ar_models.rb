@@ -35,7 +35,11 @@ module Motor
     DEFINED_MODELS = HashWithIndifferentAccess.new
     TABLE_INDEXES_CACHE = HashWithIndifferentAccess.new
     ENUM_TYPE_VALUES_CACHE = HashWithIndifferentAccess.new
-    TIMESTAMP_COLUMNS = %w[updated_at created_at inserted_at].freeze
+
+    TIMESTAMP_COLUMNS = [
+      *ResourceRecord.timestamp_attributes_for_create,
+      *ResourceRecord.timestamp_attributes_for_update
+    ].freeze
 
     RUBY_CONSTANTS = Set.new(Object.constants.map(&:to_s)).freeze
 
