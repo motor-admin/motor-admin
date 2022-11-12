@@ -34,7 +34,7 @@ production:
 <% if ENV['DATABASE_URL'].to_s.empty? %>
   adapter: sqlite3
   timeout: 30000
-  database: <%= ENV['PWD'] %>/motor-admin.sqlite3
+  database: <%= ENV['WORKDIR'] %>motor-admin.sqlite3
 <% else %>
   adapter: postgresql
   pool: 10

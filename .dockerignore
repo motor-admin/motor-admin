@@ -1,7 +1,6 @@
 /db/*.sqlite3
 
 /node_modules
-/vendor
 /coverage
 /doc
 /.git
@@ -24,9 +23,15 @@
 
 /config/master.key
 /public/packs-test
-/app/packs
 LICENSE
 .DS_Store
 motor-admin.env
 motor-admin.sqlite3
+
 /config/motor.yaml
+/motor-admin-attachments
+/docs
+/vendor/motor-admin/ui/node_modules
+/vendor/motor-admin/ui/dist
+/vendor/motor-admin/spec
+/vendor/motor-admin/.git

@@ -14,7 +14,7 @@ module Motor
           ::ResourceRecord.establish_connection(database_config.merge(prepared_statements: false))
         end
       else
-        db_path = "#{ENV['PWD']}/database.sqlite3"
+        db_path = "#{ENV['WORKDIR']}database.sqlite3"
         db_path = '/tmp/motor-admin-demo.sqlite3' unless File.exist?(db_path)
 
         File.write(db_path, Rails.root.join('motor-admin-demo.sqlite3').read) unless File.exist?(db_path)

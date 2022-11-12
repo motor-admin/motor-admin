@@ -4,12 +4,11 @@ source 'https://rubygems.org'
 
 ruby '3.1.0'
 
-gem 'rails'
-
-gem 'activerecord-sqlserver-adapter', require: false
+gem 'activerecord-sqlserver-adapter'
 gem 'ar_lazy_preload'
 gem 'audited'
 gem 'aws-sdk-s3'
+gem 'bootsnap', require: false
 gem 'devise'
 gem 'dotenv'
 gem 'fast_blank'
@@ -17,15 +16,15 @@ gem 'google-cloud-storage'
 gem 'image_processing'
 gem 'jwt'
 gem 'lograge'
-gem 'motor-admin'
-gem 'mysql2', '0.5.3', require: false
-gem 'net_http_ssl_fix', github: 'motor-admin/net_http_ssl_fix', require: 'net_http_ssl_fix'
+gem 'motor-admin', path: './vendor/motor-admin'
+gem 'mysql2'
 gem 'oj'
-gem 'pg', '1.2.3', require: false
+gem 'pg'
 gem 'puma'
+gem 'rails'
 gem 'shakapacker'
 gem 'sqlite3'
-gem 'tiny_tds', '2.1.5', require: false
+gem 'tiny_tds'
 gem 'tzinfo-data'
 
 group :development, :test do
@@ -41,7 +40,5 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen'
-  gem 'spring'
   gem 'web-console'
 end
