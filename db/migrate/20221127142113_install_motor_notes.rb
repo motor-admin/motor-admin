@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Rails/CreateTableWithTimestamps
 class InstallMotorNotes < ActiveRecord::Migration[7.0]
   def self.up
-    create_table :motor_notes do |t|
+    create_table :motor_notes, if_not_exists: true do |t|
       t.column :body, :text
       t.column :author_id, :bigint
       t.column :author_type, :string
@@ -14,7 +17,7 @@ class InstallMotorNotes < ActiveRecord::Migration[7.0]
               name: 'motor_notes_author_id_author_type_index'
     end
 
-    create_table :motor_note_tags do |t|
+    create_table :motor_note_tags, if_not_exists: true do |t|
       t.column :name, :string, null: false
 
       t.timestamps
@@ -24,7 +27,7 @@ class InstallMotorNotes < ActiveRecord::Migration[7.0]
               unique: true
     end
 
-    create_table :motor_note_tag_tags do |t|
+    create_table :motor_note_tag_tags, if_not_exists: true do |t|
       t.references :tag, null: false, foreign_key: { to_table: :motor_note_tags }, index: true
       t.references :note, null: false, foreign_key: { to_table: :motor_notes }, index: false
 
@@ -33,7 +36,7 @@ class InstallMotorNotes < ActiveRecord::Migration[7.0]
               unique: true
     end
 
-    create_table :motor_reminders do |t|
+    create_table :motor_reminders, if_not_exists: true do |t|
       t.column :author_id, :bigint, null: false
       t.column :author_type, :string, null: false
       t.column :recipient_id, :bigint, null: false
@@ -54,7 +57,7 @@ class InstallMotorNotes < ActiveRecord::Migration[7.0]
               name: 'motor_reminders_record_id_record_type_index'
     end
 
-    create_table :motor_notifications do |t|
+    create_table :motor_notifications, if_not_exists: true do |t|
       t.column :title, :string, null: false
       t.column :description, :text
       t.column :recipient_id, :bigint, null: false
@@ -81,3 +84,4 @@ class InstallMotorNotes < ActiveRecord::Migration[7.0]
     drop_table :motor_reminders
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Rails/CreateTableWithTimestamps

@@ -1,16 +1,75 @@
 <template>
-  <Card>
+  <Card
+    v-if="!configs.length"
+    class="mb-3"
+  >
     <DatabaseForm
-      :configs="configs"
       :submit-text="'Update'"
-      @success="showSuccessMessage"
+      :is-default-setup="true"
+      @submit="handleUpdate"
+    />
+  </Card>
+  <Card
+    v-for="(config, index) in configs"
+    class="mb-3"
+  >
+    <div v-if="config.name !== 'default'">
+      <div class="row">
+        <div class="col fs-3 fw-bold">
+          {{ config.name }}
+        </div>
+        <div class="col">
+          <VButton
+            type="error"
+            class="float-end"
+            ghost
+            icon="md-trash"
+            @click="remove(index)"
+          >
+            Remove
+          </VButton>
+        </div>
+      </div>
+      <Divider class="mb-1 mt-3" />
+    </div>
+    <VForm
+      v-if="!config.showFullForm"
+      :model="config"
+    >
+      <FormItem
+        prop="url"
+        label="URL"
+        class="col-12 mb-2"
+        :rules="[{required: true}]"
+      >
+        <VInput
+          :model-value="config.url.replace(/\/\/.*?@/, '//xxxxx:xxxxx@')"
+          type="text"
+          size="large"
+          placeholder="postgresql://username:password@localhost:5432/db_name"
+        />
+      </FormItem>
+      <VButton
+        icon="ios-arrow-down"
+        type="text"
+        long
+        @click="config.showFullForm = true"
+      >
+        Expand
+      </VButton>
+    </VForm>
+    <DatabaseForm
+      v-else
+      :configs="config"
+      :submit-text="'Update'"
+      @submit="handleUpdate"
     />
   </Card>
   <VButton
     size="large"
     long
     type="dashed"
-    class="my-3"
+    class="mb-3"
     @click="openAddDatabaseModal"
   >
     <Icon type="md-add" />
@@ -24,7 +83,6 @@
 
 <script>
 import api from 'application/api'
-import { databaseUrlToObject } from 'application/scripts/urls'
 
 import DatabaseForm from 'application/components/database_form'
 
@@ -36,7 +94,7 @@ export default {
   data () {
     return {
       isLoaded: false,
-      configs: { protocol: 'postgres' }
+      configs: []
     }
   },
   mounted () {
@@ -47,24 +105,73 @@ export default {
   methods: {
     loadConfigs () {
       return api.get('encrypted_configs/database.credentials').then((result) => {
-        const dbUrl = result.data.data.value[0].url
-
-        this.configs = { ...result.data.data.value[0], ...databaseUrlToObject(dbUrl) }
+        this.configs = result.data.data.value
       }).catch((error) => {
         console.error(error)
       })
     },
     openAddDatabaseModal () {
-      this.$Dialog.info({
-        title: 'Multiple databases are available in Motor Admin Pro',
-        okText: 'Learn More',
-        onOk () {
-          location.href = 'https://www.getmotoradmin.com/pro'
+      this.$Modal.open(DatabaseForm, {
+        withName: true,
+        onSubmit: (data) => {
+          this.handleUpdate(data).then(() => {
+            this.$Modal.remove()
+          })
+        }
+      }, {
+        title: 'Add Database',
+        closable: true
+      })
+    },
+    remove (index) {
+      this.$Dialog.confirm({
+        title: 'Are you sure?',
+        closable: true,
+        onOk: () => {
+          const dataConfigs = [...this.configs]
+
+          dataConfigs.splice(index, 1)
+          api.post('encrypted_configs', {
+            data: {
+              key: 'database.credentials',
+              value: dataConfigs.map((config) => ({ name: config.name, url: config.url }))
+            }
+          }).then((result) => {
+            this.$Message.info('Database credentials have been removed')
+
+            this.configs = result.data.data.value
+          }).catch((error) => {
+            console.error(error)
+          })
         }
       })
     },
-    showSuccessMessage () {
-      this.$Message.info('Database credentials have been updated successfuly')
+    handleUpdate (configs) {
+      const dataConfigs = [...this.configs]
+      const index = dataConfigs.findIndex((c) => c.name === configs.name)
+
+      if (index === -1) {
+        dataConfigs.push(configs)
+      } else {
+        dataConfigs.splice(dataConfigs.findIndex((c) => c.name === configs.name), 1, configs)
+      }
+
+      return api.post('encrypted_configs', {
+        data: {
+          key: 'database.credentials',
+          value: dataConfigs.map((config) => ({ name: config.name, url: config.url }))
+        }
+      }).then((result) => {
+        this.$Message.info('Database credentials have been updated successfuly')
+
+        this.configs = result.data.data.value
+      }).catch((error) => {
+        if (error.response?.data?.errors) {
+          this.$Message.error(error.response.data.errors.join('\n'))
+        } else {
+          console.error(error)
+        }
+      })
     }
   }
 }

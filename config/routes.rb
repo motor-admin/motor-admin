@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   devise_for :admin_users, class_name: 'Motor::AdminUser', path: ENV.fetch('BASE_PATH', '/')
 
+  resources :impersonate, only: %i[show], param: 'token'
+
   scope ENV.fetch('BASE_PATH', '/'), as: :admin do
     with_options controller: 'ui' do
       resource :setup, only: %i[show]
@@ -21,8 +23,8 @@ Rails.application.routes.draw do
     namespace :api do
       resource :setup, only: %i[create]
       resource :session, only: %i[destroy]
-      resources :roles, only: %i[index]
       resources :verify_db_connection, only: %i[create]
+      resources :roles, only: %i[index create update destroy]
       resources :encrypted_configs, only: %i[show index create], param: 'key', constraints: { key: /.+/ }
       resources :admin_users, only: %i[index show create update destroy] do
         post :reset_password
@@ -30,7 +32,11 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticate :admin_user do
+  if ENV['MOTOR_PUBLIC_ACCESS'].to_s == 'true'
     mount Motor::Admin => ENV.fetch('BASE_PATH', '/')
+  else
+    authenticate :admin_user do
+      mount Motor::Admin => ENV.fetch('BASE_PATH', '/')
+    end
   end
 end

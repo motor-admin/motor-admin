@@ -64,16 +64,6 @@ export default {
       })
     },
     openAddUserModal () {
-      if (this.users.length === 3) {
-        this.$Dialog.info({
-          title: 'Learn more about Motor Admin Pro to unlock more productivity features for your team',
-          okText: 'Learn More',
-          onOk () {
-            location.href = 'https://www.getmotoradmin.com/pro'
-          }
-        })
-      }
-
       this.$Modal.open(UserForm, {
         onSuccess: (data) => {
           this.$Modal.remove()

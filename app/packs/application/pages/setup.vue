@@ -14,6 +14,7 @@
       />
       <DatabaseForm
         v-if="step === 'database'"
+        :is-default-setup="true"
         :submit-text="'Connect to Database'"
         @success="onDatabaseSuccess"
       />

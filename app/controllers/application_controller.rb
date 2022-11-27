@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :maybe_redirect_to_setup
   before_action :maybe_redirect_from_setup
 
+  before_action :maybe_set_public_user
   before_action :authenticate_admin_user!, unless: :setup_path?
 
   before_action do
@@ -11,6 +12,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def maybe_set_public_user
+    @current_admin_user = Motor::AdminUser.public if current_admin_user.nil? && Motor.with_public_access?
+  end
 
   def current_ability
     Motor::Ability.new(current_admin_user, request)

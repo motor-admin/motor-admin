@@ -20,10 +20,27 @@
 @import 'view3/src/styles/components/radio';
 @import 'view3/src/styles/components/divider';
 @import 'view3/src/styles/components/switch';
+@import 'view3/src/styles/components/select';
 @import 'view3/src/styles/components/select-dropdown';
+@import 'view3/src/styles/components/drawer';
+@import 'view3/src/styles/components/checkbox';
+@import 'view3/src/styles/components/badge';
+@import 'view3/src/styles/components/color-picker';
 
 .#{$spin-prefix-cls} {
   &-fix {
     background-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .ivu-drawer {
+    width: 100% !important;
+  }
+}
+
+.drawer-no-bottom-padding {
+  .ivu-drawer-body {
+    padding-bottom: 0;
   }
 }

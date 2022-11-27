@@ -2,6 +2,8 @@
 
 module Api
   class EncryptedConfigsController < ApiBaseController
+    wrap_parameters :data, except: %i[include fields]
+
     load_and_authorize_resource class: 'Motor::EncryptedConfig', id_param: :key, find_by: :key
 
     rescue_from ActiveRecord::RecordNotFound do

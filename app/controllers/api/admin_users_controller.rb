@@ -60,12 +60,14 @@ module Api
 
     def serialized_user_data(user)
       {
-        data: user.as_json(only: %i[id email first_name last_name locked_at], include: %i[roles])
+        data: user.as_json(only: %i[id email first_name last_name locked_at],
+                           methods: %i[impersonate_token],
+                           include: %i[roles])
       }
     end
 
     def admin_user_params
-      params.require(:admin_user).permit(:email, :first_name, :last_name, :password)
+      params.require(:admin_user).permit(:email, :first_name, :last_name, :password, role_ids: [])
     end
   end
 end

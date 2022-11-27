@@ -4,6 +4,7 @@ import App from './app'
 import router from './router'
 
 import DynamicModal from 'view3/src/plugins/dynamic-modal'
+import DynamicDrawer from 'view3/src/plugins/dynamic-drawer'
 import DynamicDialog from 'view3/src/plugins/dynamic-dialog'
 import DynamicMessage from 'view3/src/plugins/dynamic-message'
 
@@ -21,6 +22,9 @@ import RadioGroup from 'view3/src/components/radio-group'
 import Spin from 'view3/src/components/spin'
 import Divider from 'view3/src/components/divider'
 import Switch from 'view3/src/components/switch'
+import Checkbox from 'view3/src/components/checkbox'
+import Badge from 'view3/src/components/badge'
+import MinimalSelect from './components/minimal_select'
 
 const app = createApp(App)
 
@@ -36,12 +40,16 @@ app.component('Radio', Radio)
 app.component('RadioGroup', RadioGroup)
 app.component('Divider', Divider)
 app.component('Dropdown', Dropdown)
+app.component('Checkbox', Checkbox)
+app.component('Badge', Badge)
 app.component('DropdownMenu', DropdownMenu)
 app.component('DropdownItem', DropdownItem)
+app.component('MSelect', MinimalSelect)
 
 app.use(router)
 
 app.use(DynamicModal)
+app.use(DynamicDrawer)
 app.use(DynamicDialog)
 app.use(DynamicMessage)
 

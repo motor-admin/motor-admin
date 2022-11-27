@@ -32,14 +32,18 @@ module Motor
       ]
     ).freeze
 
-    DEFINED_MODELS = HashWithIndifferentAccess.new
-    TABLE_INDEXES_CACHE = HashWithIndifferentAccess.new
-    ENUM_TYPE_VALUES_CACHE = HashWithIndifferentAccess.new
+    DEFINED_MODELS = ActiveSupport::HashWithIndifferentAccess.new
+    TABLE_INDEXES_CACHE = ActiveSupport::HashWithIndifferentAccess.new
+    ENUM_TYPE_VALUES_CACHE = ActiveSupport::HashWithIndifferentAccess.new
 
     TIMESTAMP_COLUMNS = [
       *ResourceRecord.timestamp_attributes_for_create,
       *ResourceRecord.timestamp_attributes_for_update
     ].freeze
+
+    DEFINED_CLASS_CONNECTION_URLS_STORE = ActiveSupport::HashWithIndifferentAccess.new
+
+    DEFINED_CLASS_SCHEMA_MD5_STORE = ActiveSupport::HashWithIndifferentAccess.new
 
     RUBY_CONSTANTS = Set.new(Object.constants.map(&:to_s)).freeze
 
@@ -56,67 +60,89 @@ module Motor
       SELECT * FROM information_schema.columns WHERE table_schema IN (:schema)
     SQL
 
-    MUTEX = Mutex.new
-
-    mattr_accessor :defined_models_schema_md5
-
     module_function
 
-    def call
-      schema_md5 = fetch_schemas_md5(ResourceRecord.connection)
+    def call(base_class)
+      schema_md5 = fetch_schemas_md5(base_class.connection)
 
-      tables = load_tables(ResourceRecord.connection)
+      tables = load_tables(base_class.connection)
 
-      MUTEX.synchronize do
-        clear_models if schema_md5 != defined_models_schema_md5
+      clear_models(base_class) if schema_md5 != DEFINED_CLASS_SCHEMA_MD5_STORE[base_class.name]
 
-        define_models(tables).each do |model|
-          next unless model.table_exists?
+      DEFINED_MODELS[base_class.name] ||= {}
 
-          assign_primary_key(model)
-          define_model_validators(model)
-          define_model_reflections(model)
-          define_model_many_to_many(model) if join_table_model?(model)
-        end
+      define_models(tables, base_class).each do |model|
+        next unless model.table_exists?
 
-        self.defined_models_schema_md5 = schema_md5
+        configure_defined_model(model, base_class)
       end
+
+      DEFINED_CLASS_SCHEMA_MD5_STORE[base_class.name] = schema_md5
+
+      base_class
     end
 
-    def clear_models
-      ResourceRecord.connection.schema_cache.clear!
-
-      DEFINED_MODELS.each_value { |klass| Object.send(:remove_const, klass.name) }
-
-      DEFINED_MODELS.clear
+    def defined_models_schema_md5
+      Digest::MD5.hexdigest(DEFINED_CLASS_SCHEMA_MD5_STORE.values.join)
     end
 
-    def current_connection_url
-      ::ResourceRecord.connection_db_config.try(:url)
+    def clear_models(base_class)
+      models = DEFINED_MODELS[base_class.name]
+
+      return if models.blank?
+
+      base_class.connection.schema_cache.clear!
+
+      base_constant = base_class.name.include?('::') ? base_class.name.demodulize.safe_constantize : Object
+
+      models.each_value { |klass| base_constant.send(:remove_const, klass.name.demodulize) }
+
+      DEFINED_MODELS.delete(base_class.name)
     end
 
-    def define_models(tables)
+    # rubocop:disable Metrics/AbcSize
+    def define_models(tables, base_class)
       tables.filter_map do |name|
         next if EXCLUDE_TABLES.include?(name)
 
-        class_name = name.underscore.tr(' ', '_').classify
-        class_name = "Db#{class_name}" if RUBY_CONSTANTS.include?(class_name)
+        table_class_name = name.underscore.tr(' ', '_').classify
 
-        klass = begin
-          Object.const_get(class_name)
-        rescue NameError
-          nil
-        end
+        class_name = if base_class == ::ResourceRecord
+                       "#{'Db' if RUBY_CONSTANTS.include?(class_name)}#{table_class_name}"
+                     else
+                       [base_class.name.demodulize, table_class_name].join('::')
+                     end
+
+        klass = class_name.safe_constantize
 
         next if klass && ActiveRecord::Base.descendants.include?(klass)
 
-        model = Class.new(ResourceRecord)
+        model = Class.new(base_class)
         model.table_name = name
 
-        DEFINED_MODELS[name] = model
+        DEFINED_MODELS[base_class.name][name] = model
 
-        Object.const_set(class_name, model)
+        set_model_constant(base_class, class_name, model)
       end
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def configure_defined_model(model, base_class)
+      assign_primary_key(model)
+      define_model_validators(model)
+      define_model_reflections(model, base_class)
+      define_model_many_to_many(model) if join_table_model?(model)
+
+      model
+    end
+
+    def set_model_constant(base_class, class_name, model)
+      Object.const_set(class_name, model)
+    rescue NameError
+      base_module   = base_class.name.demodulize.safe_constantize
+      base_module ||= Object.const_set(base_class.name.demodulize, Module.new)
+
+      base_module.const_set(class_name.demodulize, model)
     end
 
     def assign_primary_key(model)
@@ -125,7 +151,10 @@ module Motor
       indexes = fetch_table_indexes(model)
 
       primary_key_column =
-        model.columns.reject(&:null).find do |column|
+        model.columns.find do |column|
+          next true if column.name == 'id'
+          next if column.null
+
           indexes.find { |index| index.unique && index.columns == [column.name] }
         end
 
@@ -145,10 +174,12 @@ module Motor
       model.columns.each do |column|
         next if column.type != :enum
 
-        ENUM_TYPE_VALUES_CACHE[column.sql_type] ||=
+        cache_key = connection_url_hash(model) + column.sql_type
+
+        ENUM_TYPE_VALUES_CACHE[cache_key] ||=
           model.pluck(Arel.sql("unnest(enum_range(NULL::#{column.sql_type}))::text")).uniq
 
-        model.validates_inclusion_of column.name.to_sym, in: ENUM_TYPE_VALUES_CACHE[column.sql_type]
+        model.validates_inclusion_of column.name.to_sym, in: ENUM_TYPE_VALUES_CACHE[cache_key]
       end
     end
 
@@ -199,7 +230,9 @@ module Motor
     end
 
     def fetch_table_indexes(model)
-      TABLE_INDEXES_CACHE[model.table_name] ||= ResourceRecord.connection.indexes(model.table_name)
+      cache_key = connection_url_hash(model) + model.table_name
+
+      TABLE_INDEXES_CACHE[cache_key] ||= model.connection.indexes(model.table_name)
     end
 
     def load_tables(connection)
@@ -242,7 +275,7 @@ module Motor
       Digest::MD5.hexdigest(connection.exec_query(sql).rows.to_json)
     end
 
-    def define_model_reflections(model)
+    def define_model_reflections(model, base_class)
       model.columns.each do |column|
         next unless column.name.ends_with?('_id')
         next if column.try(:array?)
@@ -251,7 +284,7 @@ module Motor
 
         next if model.columns_hash["#{belongs_to_name}_type"]
 
-        ref_model = DEFINED_MODELS[belongs_to_name.pluralize]
+        ref_model = DEFINED_MODELS.dig(base_class.name, belongs_to_name.pluralize)
 
         next unless ref_model
 
@@ -261,7 +294,7 @@ module Motor
 
     def define_model_reflection(model, ref_model, column, belongs_to_name)
       is_has_one = fetch_table_indexes(model).any? { |index| index.unique && index.columns == [column.name] }
-      inverse_of_name = (is_has_one ? model.name.underscore : model.table_name.split('.').last).to_sym
+      inverse_of_name = (is_has_one ? model.name.demodulize.underscore : model.table_name.split('.').last).to_sym
 
       model.belongs_to(belongs_to_name, optional: column.null, inverse_of: inverse_of_name)
 
@@ -270,6 +303,10 @@ module Motor
       else
         ref_model.has_many(inverse_of_name, dependent: :destroy, inverse_of: belongs_to_name)
       end
+    end
+
+    def connection_url_hash(model)
+      model.connection_db_config.try(:url).hash.to_s
     end
   end
 end

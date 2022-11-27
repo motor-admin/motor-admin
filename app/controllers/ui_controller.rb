@@ -21,7 +21,8 @@ class UiController < ApplicationController
     {
       version: Motor::VERSION,
       base_path: Rails.application.routes.url_helpers.motor_admin_path,
-      current_user: current_admin_user.as_json(only: %i[id email first_name last_name])
+      current_user: current_admin_user.as_json(only: %i[id email first_name last_name]),
+      schema: Motor::BuildSchema.call(Motor::Configs::LoadFromCache.load_cache_keys, current_ability)
     }
   end
 end

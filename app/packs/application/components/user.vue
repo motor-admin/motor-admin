@@ -25,6 +25,12 @@
         </div>
       </div>
       <div class="col-2 d-flex justify-content-end align-items-center">
+        <VButton
+          type="text"
+          icon="ios-redo"
+          :to="`/impersonate/${user.impersonate_token}`"
+          target="_blank"
+        />
         <Dropdown
           trigger="click"
           placement="bottom-end"

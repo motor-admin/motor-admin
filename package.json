@@ -21,7 +21,7 @@
     "postcss-preset-env": "^6.7.0",
     "sass": "^1.37.5",
     "sass-loader": "^12.1.0",
-    "shakapacker": "6.4.1",
+    "shakapacker": "6.5.4",
     "terser-webpack-plugin": "5",
     "view3": "https://github.com/omohokcoj/view3#motor-admin",
     "vue": "^3.0.0",

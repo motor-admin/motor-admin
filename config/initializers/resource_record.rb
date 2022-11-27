@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ResourceRecord < ApplicationRecord
+class ResourceRecord < ActiveRecord::Base
   self.abstract_class = true
   self.inheritance_column = nil
 

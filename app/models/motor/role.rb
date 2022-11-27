@@ -9,22 +9,31 @@ module Motor
 
     DEFAULT_RULE = {
       actions: [:manage],
-      subjects: [:all]
+      subjects: [:all],
+      attributes: [],
+      conditions: []
     }.freeze
 
     DEFAULT_ROLES = [
       SUPERADMIN = 'superadmin',
-      ADMIN = 'admin'
+      ADMIN = 'admin',
+      PUBLIC = 'public'
     ].freeze
 
     def self.superadmin
-      create_with(rules: DEFAULT_RULE).find_or_create_by(name: SUPERADMIN)
+      create_with(rules: [DEFAULT_RULE]).find_or_create_by(name: SUPERADMIN)
     rescue ActiveRecord::RecordNotUnique
       retry
     end
 
     def self.admin
-      create_with(rules: DEFAULT_RULE).find_or_create_by(name: ADMIN)
+      create_with(rules: [DEFAULT_RULE]).find_or_create_by(name: ADMIN)
+    rescue ActiveRecord::RecordNotUnique
+      retry
+    end
+
+    def self.public
+      create_with(rules: []).find_or_create_by(name: PUBLIC)
     rescue ActiveRecord::RecordNotUnique
       retry
     end

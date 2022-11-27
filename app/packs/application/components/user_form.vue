@@ -55,6 +55,16 @@
           placeholder="**********"
         />
       </FormItem>
+      <FormItem
+        v-if="mode !== 'setup' && withRole"
+        prop="role_ids"
+        label="Roles"
+        class="col-12"
+      >
+        <RolesSelect
+          v-model="value.role_ids"
+        />
+      </FormItem>
     </div>
     <VButton
       type="primary"
@@ -74,9 +84,13 @@
 
 <script>
 import api from 'application/api'
+import RolesSelect from './roles_select'
 
 export default {
   name: 'UserForm',
+  components: {
+    RolesSelect
+  },
   props: {
     user: {
       type: Object,
@@ -86,7 +100,8 @@ export default {
           email: '',
           password: '',
           first_name: '',
-          last_name: ''
+          last_name: '',
+          role_ids: []
         }
       }
     },
@@ -104,6 +119,11 @@ export default {
       type: String,
       required: false,
       default: 'Submit'
+    },
+    withRole: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   emits: ['success', 'error'],
@@ -127,23 +147,34 @@ export default {
     rules () {
       return {
         email: [{ required: true, type: 'email' }],
-        password: [{ required: this.requirePassword, min: 6 }]
+        password: [{ required: this.requirePassword, min: 6 }],
+        role_ids: [{ required: this.mode !== 'setup' && this.withRole }]
       }
     }
   },
   watch: {
     user (value) {
       if (value) {
-        this.value = JSON.parse(JSON.stringify(value))
+        this.value = this.normalizeUser(this.user)
       }
     }
   },
-  mounted () {
-    this.value = JSON.parse(JSON.stringify(this.user))
+  created () {
+    this.value = this.normalizeUser(this.user)
   },
   methods: {
+    normalizeUser (user) {
+      return JSON.parse(JSON.stringify({
+        ...user,
+        role_ids: user.roles ? user.roles.map((e) => e.id) : []
+      }))
+    },
     submit () {
       this.isLoading = true
+
+      if (!this.withRole) {
+        delete this.value.role_ids
+      }
 
       api[this.apiMethod](this.apiPath, {
         admin_user: this.value

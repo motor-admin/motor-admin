@@ -1,13 +1,11 @@
 <template>
   <div v-if="roles.length">
-    <Card
+    <Role
       v-for="role in roles"
       :key="role.id"
-      class="mb-3"
-    >
-      <Icon type="ios-person" />
-      {{ role.name }}
-    </Card>
+      :role="role"
+      @update="loadRoles"
+    />
     <VButton
       size="large"
       long
@@ -27,11 +25,16 @@
 
 <script>
 import api from 'application/api'
+import Role from '../components/role'
+import RoleForm from '../components/role_form'
 
 let rolesCache = []
 
 export default {
   name: 'RolesSettingsPage',
+  components: {
+    Role
+  },
   data () {
     return {
       roles: rolesCache,
@@ -53,13 +56,15 @@ export default {
       })
     },
     openAddRoleModal () {
-      this.$Dialog.info({
-        title: 'User roles and permissions are available in Motor Admin Pro',
-        okText: 'Learn More',
-        onOk () {
-          location.href = 'https://www.getmotoradmin.com/pro'
+      this.$Drawer.open(RoleForm, {
+        onSuccess: (data) => {
+          this.$Drawer.remove()
+          this.$Message.info(`${data.name} role has been added`)
+
+          this.loadRoles()
         }
       }, {
+        title: 'Create New Role',
         closable: true
       })
     }

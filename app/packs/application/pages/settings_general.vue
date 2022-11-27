@@ -5,6 +5,7 @@
       :require-password="false"
       :mode="'update'"
       :submit-text="'Update'"
+      :with-role="false"
       @success="onUserUpdate"
     />
   </Card>

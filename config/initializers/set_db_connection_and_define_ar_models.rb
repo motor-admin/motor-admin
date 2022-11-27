@@ -9,8 +9,7 @@ Rails.configuration.to_prepare do
     end
 
     def set_db_connection_and_define_ar_models
-      Motor::SetDbConnection.call
-      Motor::DefineArModels.call
+      Motor::DefineConnectionClasses.call
     end
   end)
 
@@ -22,10 +21,9 @@ Rails.configuration.to_prepare do
     end
 
     def maybe_set_db_connection_and_define_ar_models
-      return if Motor::SetDbConnection.already_set?
+      return if Motor::DefineConnectionClasses.already_defined?
 
-      Motor::SetDbConnection.call
-      Motor::DefineArModels.call
+      Motor::DefineConnectionClasses.call
     end
   end)
 end

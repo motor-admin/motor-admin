@@ -23,50 +23,64 @@
       </select>
     </div>
     <Divider />
-    <div class="d-flex align-items-center mb-4">
-      <Switch
-        v-model="checked"
-        @on-change="showDialog"
-      />
-      <div class="ms-2">
-        <span>Live Collaboration</span>
-        <br>
-        <small>Leave notes for team members and resolve customer support issues directly in the admin panel</small>
-      </div>
+    <div class="align-items-center mb-2">
+      <VForm>
+        <FormItem
+          prop="token"
+          label="Slack Token"
+          class="col-12 mb-2"
+        >
+          <VInput
+            v-model="slackApiKey"
+            type="text"
+            placeholder="API Token"
+          />
+        </FormItem>
+        <a
+          href="https://my.slack.com/services/new/bot"
+          target="_blank"
+        >Create a Slack Bot here</a>
+        <VButton
+          type="primary"
+          class="mt-3"
+          size="large"
+          long
+          @click="setSlackToken"
+        >
+          Submit
+        </VButton>
+      </VForm>
     </div>
-    <div class="d-flex align-items-center mb-4">
-      <Switch
-        v-model="checked"
-        @on-change="showDialog"
-      />
-      <div class="ms-2">
-        <span>Sales CRM</span>
-        <br>
-        <small>Sales stages, notes, reminders, and reports integrated with the application database data</small>
-      </div>
+    <Divider />
+    <div class="align-items-center mb-2">
+      <VForm>
+        <FormItem
+          prop="html"
+          label="Tracking script"
+          class="col-12 mb-2"
+        >
+          <VInput
+            v-model="configs['ui.custom_html']"
+            type="textarea"
+            placeholder="<script> </script>"
+            :autosize="{ minRows: 4, maxRows: 7 }"
+          />
+        </FormItem>
+        <VButton
+          type="primary"
+          class="mt-3"
+          size="large"
+          long
+          @click="setCustomHtml(configs['ui.custom_html'])"
+        >
+          Submit
+        </VButton>
+      </VForm>
     </div>
-    <div class="d-flex align-items-center mb-4">
-      <Switch
-        v-model="checked"
-        @on-change="showDialog"
-      />
-      <div class="ms-2">
-        <span>Audit Logs</span>
-        <br>
-        <small>Log all changes made by users with the ability to review and revert the changed data</small>
-      </div>
-    </div>
-    <div class="d-flex align-items-center">
-      <Switch
-        v-model="checked"
-        @on-change="showDialog"
-      />
-      <div class="ms-2">
-        <span>Slack/Teams Integration</span>
-        <br>
-        <small>Share resources and reports from the admin panel via direct integration</small>
-      </div>
-    </div>
+    <Spin
+      v-if="isLoading"
+      fix
+    />
   </Card>
 </template>
 
@@ -77,9 +91,16 @@ export default {
   name: 'OtherSettingsPage',
   data () {
     return {
+      isLoading: false,
       checked: false,
-      language: document.documentElement.getAttribute('lang')
+      slackApiKey: '',
+      language: document.documentElement.getAttribute('lang'),
+      configs: {}
     }
+  },
+  mounted () {
+    this.loadSlackCredentials()
+    this.loadConfigs()
   },
   methods: {
     changeLanguage (event) {
@@ -90,6 +111,36 @@ export default {
         this.$Message.info('Admin panel language has been changed!')
 
         document.documentElement.setAttribute('lang', event.target.value)
+      })
+    },
+    setCustomHtml (value) {
+      api.post('configs', {
+        key: 'ui.custom_html',
+        value: value
+      }).then(() => {
+        this.$Message.info('Changes have been saved!')
+      })
+    },
+    setSlackToken (event) {
+      api.post('encrypted_configs', {
+        key: 'slack.credentials',
+        value: { api_key: this.slackApiKey }
+      }).then(() => {
+        this.$Message.info('Credentials has been saved!')
+      })
+    },
+    loadConfigs () {
+      api.get('configs').then((result) => {
+        this.configs = result.data.data.reduce((acc, conf) => {
+          acc[conf.key] = conf.value
+
+          return acc
+        }, {})
+      })
+    },
+    loadSlackCredentials () {
+      api.get('encrypted_configs/slack.credentials').then((result) => {
+        this.slackApiKey = result.data.data.value.api_key || ''
       })
     },
     showDialog () {
