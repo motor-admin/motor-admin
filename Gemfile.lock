@@ -1,7 +1,7 @@
 PATH
   remote: vendor/motor-admin
   specs:
-    motor-admin (0.3.17)
+    motor-admin (0.4.0)
       ar_lazy_preload (~> 1.0)
       audited (~> 5.0)
       cancancan (~> 3.0)
