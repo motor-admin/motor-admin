@@ -1,7 +1,7 @@
 PATH
   remote: vendor/motor-admin
   specs:
-    motor-admin (0.4.0)
+    motor-admin (0.4.3)
       ar_lazy_preload (~> 1.0)
       audited (~> 5.0)
       cancancan (~> 3.0)
@@ -84,7 +84,7 @@ GEM
     ar_lazy_preload (1.0.0)
       rails (>= 5.2)
     ast (2.4.2)
-    audited (5.0.2)
+    audited (5.1.0)
       activerecord (>= 5.0, < 7.1)
     aws-eventstream (1.2.0)
     aws-partitions (1.594.0)
@@ -133,7 +133,7 @@ GEM
     faraday-net_http (2.0.3)
     fast_blank (1.0.1)
     ffi (1.15.5)
-    fugit (1.7.2)
+    fugit (1.8.0)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     globalid (1.0.0)
