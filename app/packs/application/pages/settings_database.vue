@@ -11,6 +11,7 @@
   </Card>
   <Card
     v-for="(config, index) in configs"
+    :key="index"
     class="mb-3"
   >
     <div v-if="config.name !== 'default'">

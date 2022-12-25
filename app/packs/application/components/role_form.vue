@@ -25,7 +25,8 @@
       class="mb-1"
     >
       <RuleItem
-        v-for="rule in value.rules"
+        v-for="(rule, index) in value.rules"
+        :key="index"
         :rule="rule"
         @update="maybeHandleSubmit"
         @remove="removeRule(rule)"

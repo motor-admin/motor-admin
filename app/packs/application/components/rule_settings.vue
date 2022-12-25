@@ -29,6 +29,7 @@
       >
         <RuleFilterItem
           v-for="(condition, index) in filteredConditions"
+          :key="index"
           :filter="condition"
           :model="subject.class_name === 'Motor::Note' ? { columns: noteColumns, associations: [] } : subject"
           @update:model-value="updateFilterCondition(index, $event)"
