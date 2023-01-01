@@ -17,7 +17,7 @@ require 'dotenv'
 
 dotenv_filename = 'motor-admin.env'
 
-if File.exists?(dotenv_filename)
+if File.exist?(dotenv_filename)
   Dotenv.load(dotenv_filename)
 elsif ENV['SECRET_KEY_BASE'].to_s.empty?
   require 'securerandom'

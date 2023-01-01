@@ -1,4 +1,4 @@
-FROM ruby:3.1.0-alpine as webpacker
+FROM ruby:3.2.0-alpine as webpacker
 
 ENV RAILS_ENV=production
 ENV NODE_ENV=production
@@ -20,7 +20,7 @@ COPY ./app/packs ./app/packs
 
 RUN echo "gem 'shakapacker'" > Gemfile && ./bin/webpacker
 
-FROM ruby:3.1.0-alpine as assets
+FROM ruby:3.2.0-alpine as assets
 
 WORKDIR /opt
 
@@ -34,7 +34,7 @@ COPY ./vendor/motor-admin/ui ./
 
 RUN yarn build:prod
 
-FROM ruby:3.1.0-alpine as app
+FROM ruby:3.2.0-alpine as app
 
 ENV RAILS_ENV=production
 ENV BUNDLE_WITHOUT="development:test"
