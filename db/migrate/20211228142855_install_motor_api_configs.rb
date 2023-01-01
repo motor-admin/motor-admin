@@ -11,8 +11,8 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
       serialize :credentials, Motor::HashSerializer
       serialize :preferences, Motor::HashSerializer
 
-      attribute :preferences, default: -> { HashWithIndifferentAccess.new }
-      attribute :credentials, default: -> { HashWithIndifferentAccess.new }
+      attribute :preferences, default: -> { ActiveSupport::HashWithIndifferentAccess.new }
+      attribute :credentials, default: -> { ActiveSupport::HashWithIndifferentAccess.new }
     end
   end
 
