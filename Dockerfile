@@ -54,7 +54,8 @@ COPY . ./
 COPY --from=assets /opt/dist ./vendor/motor-admin/ui/dist
 COPY --from=webpacker /opt/public/packs ./public/packs
 
-RUN SECRET_KEY_BASE=bootsnap rails r "puts"
+RUN bundle exec bootsnap precompile --gemfile app/ lib/
+
 RUN ln -s /opt/motor-admin/bin/motor-admin /usr/local/bin && chmod +x /usr/local/bin/motor-admin
 
 WORKDIR /app
