@@ -1,7 +1,7 @@
 PATH
   remote: vendor/motor-admin
   specs:
-    motor-admin (0.4.4)
+    motor-admin (0.4.5)
       ar_lazy_preload (~> 1.0)
       audited (~> 5.0)
       cancancan (~> 3.0)
@@ -133,7 +133,7 @@ GEM
     faraday-net_http (3.0.2)
     fast_blank (1.0.1)
     ffi (1.15.5)
-    fugit (1.8.0)
+    fugit (1.8.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     globalid (1.0.0)
