@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 aliases = {
-  's'  => 'server',
+  's' => 'server',
+  'c' => 'console',
   'sync' => 'config:sync',
   'load' => 'config:load',
   'reload' => 'config:reload',
@@ -11,7 +13,7 @@ aliases = {
 command = ARGV.shift unless ARGV.first.to_s.start_with?('-')
 command = aliases[command] || command || 'server'
 
-fail("Invalid command") unless aliases.value?(command)
+raise('Invalid command') unless aliases.value?(command)
 
 require 'dotenv'
 
@@ -41,15 +43,16 @@ end
 
 ENV['RAILS_ENV'] = 'production'
 
-%w[BASE_PATH DATABASE_URL SECRET_KEY_BASE HOST PORT SSL_CERT_PATH SSL_KEY_PATH SYNC_API_KEY SYNC_REMOTE_URL].each do |key|
+%w[BASE_PATH DATABASE_URL SECRET_KEY_BASE HOST PORT SSL_CERT_PATH SSL_KEY_PATH SYNC_API_KEY
+   SYNC_REMOTE_URL].each do |key|
   prefix_key = "MOTOR_#{key}"
 
-  ENV[key] = ENV[prefix_key] if !ENV[prefix_key].to_s.empty?
+  ENV[key] = ENV[prefix_key] unless ENV[prefix_key].to_s.empty?
 end
 
 ENV.delete('DATABASE_URL') if ENV['DATABASE_URL'].to_s.empty?
 
-fail('SECRET_KEY_BASE should contain at least 64 characters') if ENV['SECRET_KEY_BASE'].to_s.size < 64
+raise('SECRET_KEY_BASE should contain at least 64 characters') if ENV['SECRET_KEY_BASE'].to_s.size < 64
 
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative '../config/boot'
@@ -59,9 +62,11 @@ if command == 'server' && !ENV['SSL_KEY_PATH'].to_s.empty?
   ARGV.push('-b', "ssl://0.0.0.0:#{ENV.fetch('PORT', 3000)}?key=#{ENV['SSL_KEY_PATH']}&cert=#{ENV['SSL_CERT_PATH']}")
 end
 
-
-if command == 'server'
+case command
+when 'server'
   puts '=> Starting Motor Admin - https://www.getmotoradmin.com/'
+  Rails::Command.invoke(command, ARGV)
+when 'console'
   Rails::Command.invoke(command, ARGV)
 else
   require_relative '../config/application'
