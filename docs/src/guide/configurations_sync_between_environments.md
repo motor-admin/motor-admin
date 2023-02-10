@@ -13,13 +13,13 @@ MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ MOTOR_SYNC_API_KEY=secure-random-s
 Docker container should be run with mounted volume in order to access `motor-admin.yml` configs file for git version control:
 
 ```bash
-docker run -it -p 3000:3000 -v `pwd`:/app motoradmin/motoradmin:latest
+docker run --rm -it -p 3000:3000 -v `pwd`:/app motoradmin/motoradmin:latest
 ```
 
 ### Docker Sync
 
 ```bash
-docker run -it -e MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ -e MOTOR_SYNC_API_KEY=secure-random-string motoradmin/motoradmin:latest motor-admin sync
+docker run --rm -it -e MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ -e MOTOR_SYNC_API_KEY=secure-random-string motoradmin/motoradmin:latest motor-admin sync
 ```
 
 ### Docker Compose Sync

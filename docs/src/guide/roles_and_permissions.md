@@ -1,7 +1,5 @@
 # Roles and permissions
 
-Motor Admin [Pro](https://www.getmotoradmin.com/pro) contains configurable user roles feature to define column and row level permissions on resources.
-
 ## Defining role permissions
 
 Motor Admin uses roles-based permissions control - users can contain multiple roles. Roles can be defined using [/settings/roles](http://localhost:3000/settings/roles) page.
