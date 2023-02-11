@@ -22,6 +22,7 @@ module Motor
           base_class = fetch_or_define_base_class(db_name)
 
           if base_class.connection_db_config.try(:url) != db_url
+            db_url = db_url.sub(/\Amysql:/, 'mysql2:').sub(/\Apostgresql:/, 'postgres:')
             base_class.establish_connection(url: db_url, prepared_statements: false)
           end
 
