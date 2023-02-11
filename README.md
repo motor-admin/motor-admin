@@ -67,19 +67,16 @@ docker compose up
 * [Intelligence search](#intelligence-search)
 * [Optimized for mobile](#optimized-for-mobile)
 * [Configurations Sync](https://github.com/motor-admin/motor-admin/tree/master/guides/configurations_sync_between_environments.md)
-
-## [Pro](https://www.getmotoradmin.com/pro)
-
-* Roles and permissions control
+* [Roles and permissions control](https://docs.getmotoradmin.com/guide/roles_and_permissions.html)
 * Multiple databases support
 * Audit log
-* Live collaboration
-* Multi-factor authentication
-* Custom styling
 * Personalized report alerts via Slack
-* Full-text search
-* Stripe integration
-* Shareable forms and reports
+
+## [Enterprise](https://www.getmotoradmin.com/pro)
+
+* Multi-factor authentication
+* SAML SSO
+* Custom styling
 * [learn more](https://www.getmotoradmin.com/pro)
 
 ### Customizable CRUD
