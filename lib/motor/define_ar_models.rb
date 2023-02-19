@@ -137,7 +137,11 @@ module Motor
     end
 
     def set_model_constant(base_class, class_name, model)
-      Object.const_set(class_name, model)
+      if class_name.safe_constantize
+        Object.const_set("#{class_name}Record", model)
+      else
+        Object.const_set(class_name, model)
+      end
     rescue NameError
       base_module   = base_class.name.demodulize.safe_constantize
       base_module ||= Object.const_set(base_class.name.demodulize, Module.new)
