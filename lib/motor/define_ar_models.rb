@@ -119,6 +119,7 @@ module Motor
 
         model = Class.new(base_class)
         model.table_name = name
+        model.ignored_columns += (model.column_names.map(&:to_sym).intersection(base_class.instance_methods) - [:id])
 
         DEFINED_MODELS[base_class.name][name] = model
 
