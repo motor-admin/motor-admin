@@ -2,9 +2,9 @@
 
 source 'https://rubygems.org'
 
-ruby '3.2.0'
+ruby '3.2.1'
 
-gem 'activerecord-sqlserver-adapter'
+# gem 'activerecord-sqlserver-adapter'
 gem 'ar_lazy_preload'
 gem 'audited'
 gem 'aws-sdk-s3'
@@ -16,6 +16,7 @@ gem 'google-cloud-storage'
 gem 'image_processing'
 gem 'jwt'
 gem 'lograge'
+# gem 'motor-admin'
 gem 'motor-admin', path: './vendor/motor-admin'
 gem 'mysql2'
 gem 'oj'
@@ -24,7 +25,7 @@ gem 'puma'
 gem 'rails'
 gem 'shakapacker'
 gem 'sqlite3'
-gem 'tiny_tds'
+# gem 'tiny_tds'
 gem 'tzinfo-data'
 
 group :development, :test do

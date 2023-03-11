@@ -1,7 +1,7 @@
 PATH
   remote: vendor/motor-admin
   specs:
-    motor-admin (0.4.7)
+    motor-admin (0.4.8)
       ar_lazy_preload (~> 1.0)
       audited (~> 5.0)
       cancancan (~> 3.0)
@@ -64,9 +64,6 @@ GEM
     activerecord (7.0.4)
       activemodel (= 7.0.4)
       activesupport (= 7.0.4)
-    activerecord-sqlserver-adapter (7.0.0.0)
-      activerecord (~> 7.0.0)
-      tiny_tds
     activestorage (7.0.4)
       actionpack (= 7.0.4)
       activejob (= 7.0.4)
@@ -323,7 +320,6 @@ GEM
       mini_portile2 (~> 2.8.0)
     thor (1.2.1)
     timeout (0.3.1)
-    tiny_tds (2.1.5)
     trailblazer-option (0.1.2)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -352,7 +348,6 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
-  activerecord-sqlserver-adapter
   ar_lazy_preload
   audited
   aws-sdk-s3
@@ -380,13 +375,12 @@ DEPENDENCIES
   rubocop-rspec
   shakapacker
   sqlite3
-  tiny_tds
   tzinfo-data
   web-console
   yard
 
 RUBY VERSION
-   ruby 3.2.0p0
+   ruby 3.2.1p31
 
 BUNDLED WITH
-   2.3.25
+   2.4.6
