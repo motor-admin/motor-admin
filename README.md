@@ -25,22 +25,6 @@ Search, create, update, and delete data entries using a convenient UI. Create co
 
 [![Deploy on Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/motor-admin/motor-admin/tree/master&refcode=33c75473a82d)
 
-### Ubuntu
-
-```bash
-curl -o motor-admin -L https://github.com/motor-admin/motor-admin/releases/download/latest/motor-admin-Linux-x86_64
-sudo chmod +x ./motor-admin
-./motor-admin
-```
-
-### MacOS
-
-```bash
-curl -o motor-admin -L https://github.com/motor-admin/motor-admin/releases/download/latest/motor-admin-Darwin-x86_64
-chmod +x ./motor-admin
-./motor-admin
-```
-
 ### Docker
 
 ```bash
