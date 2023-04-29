@@ -60,6 +60,9 @@
           placeholder="example.com"
           @update:model-value="assignUrl"
         />
+        <small v-if="isError && ['localhost', '0.0.0.0', '127.0.0.1'].includes(dataConfigs.host)">
+          Use <code>`host.docker.internal`</code> on macOS and Windows.
+        </small>
       </FormItem>
       <FormItem
         prop="port"
@@ -167,6 +170,7 @@ export default {
   emits: ['success', 'error', 'submit'],
   data () {
     return {
+      isError: false,
       isLoading: false,
       dataConfigs: {}
     }
@@ -253,6 +257,7 @@ export default {
 
         this.$emit('error', error)
 
+        this.isError = true
         this.isLoading = false
       })
     },
