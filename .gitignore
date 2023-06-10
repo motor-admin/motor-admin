@@ -46,3 +46,8 @@ motor-admin-attachments
 Darwin-x86_64
 Linux-x86_64
 Linux-aarch64
+
+/vendor/motor-admin-pro
+/vendor/motor-admin/ui/dist
+/vendor/motor-admin/spec
+/vendor/motor-admin/.git

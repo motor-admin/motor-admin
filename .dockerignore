@@ -35,3 +35,8 @@ motor-admin.sqlite3
 /vendor/motor-admin/ui/dist
 /vendor/motor-admin/spec
 /vendor/motor-admin/.git
+
+/vendor/motor-admin-pro/ui/node_modules
+/vendor/motor-admin-pro/ui/dist
+/vendor/motor-admin-pro/spec
+/vendor/motor-admin-pro/.git
