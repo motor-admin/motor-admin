@@ -37,7 +37,6 @@
 <script>
 import SubjectSelect from './subject_select'
 import ActionsSelect from './action_select'
-import RuleSettingsForm from './rule_settings'
 
 export default {
   name: 'RuleItem',
@@ -69,17 +68,13 @@ export default {
   },
   methods: {
     openSettings () {
-      this.$Modal.open(RuleSettingsForm, {
-        rule: this.rule,
-        subject: this.selectedSubject,
-        onSubmit: (rule) => {
-          Object.assign(this.rule, rule)
-
-          this.$Modal.remove()
-          this.$emit('update')
+      this.$Dialog.info({
+        title: 'This feature is available in Motor Admin Pro',
+        okText: 'Learn More',
+        onOk () {
+          location.href = 'https://www.getmotoradmin.com/pro'
         }
       }, {
-        title: 'Rule Settings',
         closable: true
       })
     },
