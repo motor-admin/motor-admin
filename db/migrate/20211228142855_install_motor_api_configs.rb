@@ -33,7 +33,7 @@ class InstallMotorApiConfigs < ActiveRecord::Migration[7.0]
   end
 
   def up
-    create_table :motor_api_configs do |t|
+    create_table :motor_api_configs, if_not_exists: true do |t|
       t.column :name, :string, null: false
       t.column :url, :string, null: false
       t.column :preferences, :text, null: false
