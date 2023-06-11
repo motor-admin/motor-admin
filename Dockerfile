@@ -10,7 +10,7 @@ RUN apk add --no-cache nodejs yarn git build-base python3 && \
 
 COPY ./package.json ./yarn.lock ./
 
-RUN yarn install
+RUN yarn install --network-timeout 1000000
 
 COPY ./bin/webpacker ./bin/webpacker
 COPY ./config/webpack ./config/webpack
@@ -28,7 +28,7 @@ RUN apk add --no-cache nodejs yarn git build-base python3
 
 COPY ./vendor/motor-admin/ui/package.json ./vendor/motor-admin/ui/yarn.lock ./
 
-RUN yarn install
+RUN yarn install --network-timeout 1000000
 
 COPY ./vendor/motor-admin/ui ./
 
