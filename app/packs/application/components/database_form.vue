@@ -266,7 +266,7 @@ export default {
         data: {
           key: 'database.credentials',
           value: [
-            { name: 'default', url: this.dataConfigs.url }
+            { name: 'default', url: this.dataConfigs.url, schema_search_path: this.dataConfigs.schema_search_path }
           ]
         }
       }).then((result) => {

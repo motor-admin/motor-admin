@@ -160,7 +160,7 @@ export default {
       return api.post('encrypted_configs', {
         data: {
           key: 'database.credentials',
-          value: dataConfigs.map((config) => ({ name: config.name, url: config.url }))
+          value: dataConfigs.map((config) => ({ name: config.name, url: config.url, schema_search_path: config.schema_search_path }))
         }
       }).then((result) => {
         this.$Message.info('Database credentials have been updated successfuly')

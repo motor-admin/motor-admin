@@ -9,33 +9,37 @@ module Motor
     def call
       database_configs = Motor::EncryptedConfig.find_by(key: Motor::EncryptedConfig::DATABASE_CREDENTIALS_KEY)
 
-      unless database_configs
-        @already_defined = true
-
-        return set_demo_db
-      end
+      return set_demo_db unless database_configs
 
       base_classes =
         database_configs.value.map do |db_configs|
           db_name, db_url = db_configs.values_at('name', 'url')
+          db_url = normalize_url(db_url)
 
           base_class = fetch_or_define_base_class(db_name)
 
           if base_class.connection_db_config.try(:url) != db_url
-            db_url = db_url.sub(/\Amysql:/, 'mysql2:').sub(/\Apostgresql:/, 'postgres:')
             base_class.establish_connection(url: db_url, prepared_statements: false)
+
+            if db_configs['schema_search_path'].present?
+              base_class.connection.schema_search_path = db_configs['schema_search_path']
+            end
           end
 
           Motor::DefineArModels.call(base_class)
         end
 
       clear_removed_connection_classes(base_classes)
-
+    ensure
       @already_defined = true
     end
 
     def already_defined?
       @already_defined
+    end
+
+    def normalize_url(url)
+      url.sub(/\Amysql:/, 'mysql2:').sub(/\Apostgresql:/, 'postgres:')
     end
 
     def clear_removed_connection_classes(base_classes)
