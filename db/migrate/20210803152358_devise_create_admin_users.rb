@@ -39,10 +39,10 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration[7.0]
       t.timestamps null: false
     end
 
-    add_index :motor_admin_users, :email,                unique: true
-    add_index :motor_admin_users, :reset_password_token, unique: true
+    add_index :motor_admin_users, :email,                unique: true, if_not_exists: true
+    add_index :motor_admin_users, :reset_password_token, unique: true, if_not_exists: true
     # add_index :motor_admin_users, :confirmation_token,   unique: true
-    add_index :motor_admin_users, :unlock_token,         unique: true
+    add_index :motor_admin_users, :unlock_token,         unique: true, if_not_exists: true
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

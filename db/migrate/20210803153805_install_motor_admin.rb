@@ -141,11 +141,12 @@ class InstallMotorAdmin < ActiveRecord::Migration[7.0]
       t.column :created_at, :datetime
     end
 
-    add_index :motor_audits, %i[auditable_type auditable_id version], name: 'motor_auditable_index'
-    add_index :motor_audits, %i[associated_type associated_id], name: 'motor_auditable_associated_index'
-    add_index :motor_audits, %i[user_id user_type], name: 'motor_auditable_user_index'
-    add_index :motor_audits, :request_uuid
-    add_index :motor_audits, :created_at
+    add_index :motor_audits, %i[auditable_type auditable_id version], name: 'motor_auditable_index', if_not_exists: true
+    add_index :motor_audits, %i[associated_type associated_id], name: 'motor_auditable_associated_index',
+                                                                if_not_exists: true
+    add_index :motor_audits, %i[user_id user_type], name: 'motor_auditable_user_index', if_not_exists: true
+    add_index :motor_audits, :request_uuid, if_not_exists: true
+    add_index :motor_audits, :created_at, if_not_exists: true
 
     model = Class.new(ActiveRecord::Base)
     model.table_name = 'motor_configs'
