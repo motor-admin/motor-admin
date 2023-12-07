@@ -13,6 +13,9 @@ Search, create, update, and delete data entries using a convenient UI. Create co
 
 ## Deployment
 
+### Dome
+[![Deploy to Dome](https://trydome.io/button.svg)](https://app.trydome.io/signup?package=motor-admin)
+
 ### Heroku
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/motor-admin/motor-admin-heroku)
