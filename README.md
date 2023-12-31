@@ -6,7 +6,7 @@
 
 ### No-code Admin Panel and Business Intelligence tool
 
-🤓 [Live Demo](https://demo.getmotoradmin.com/) | 👀 [Features overview](https://www.youtube.com/watch?v=ZD4Six8ZEP8) | 📙 [Docs](https://docs.getmotoradmin.com/guide/) | 💬 [Discord](https://discord.com/invite/mFFJKSTgw3) | ⭐ [Pro](https://www.getmotoradmin.com/pro)
+🤓 [Live Demo](https://app.getmotoradmin.com/demo/) | 👀 [Features overview](https://www.youtube.com/watch?v=ZD4Six8ZEP8) | 📙 [Docs](https://docs.getmotoradmin.com/guide/) | 💬 [Discord](https://discord.com/invite/mFFJKSTgw3) | ⭐ [Pro](https://www.getmotoradmin.com/pro)
 </div>
 
 Search, create, update, and delete data entries using a convenient UI. Create complex custom actions like sending an automated email to your customers via API integration. Build custom reports with SQL and visualize the results with charts. Combine individual reports into a single dashboard and share it with your team.
