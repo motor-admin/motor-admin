@@ -1,6 +1,6 @@
 # Configurations Sync
 
-All admin panel configurations are automatically stored in the `motor-admin.yml` file. It's recommended to include this file in the application git repository to always have the admin panel configurations in sync across different local and remote environments. Configurations from the `motor-admin.yml` file are loaded automatically each time the file changes via `git push` or `rsync`.
+All admin panel configurations are automatically stored in the `motor.yml` file. It's recommended to include this file in the application git repository to always have the admin panel configurations in sync across different local and remote environments. Configurations from the `motor.yml` file are loaded automatically each time the file changes via `git push` or `rsync`.
 
 It's possible to sync local development admin panel configurations with remote production application via `rake motor:sync` task:
 
@@ -10,7 +10,7 @@ MOTOR_SYNC_REMOTE_URL=https://remote-app-url/ MOTOR_SYNC_API_KEY=secure-random-s
 
 ### Docker Git
 
-Docker container should be run with mounted volume in order to access `motor-admin.yml` configs file for git version control:
+Docker container should be run with mounted volume in order to access `motor.yml` configs file for git version control:
 
 ```bash
 docker run --rm -it -p 3000:3000 -v `pwd`:/app motoradmin/motoradmin:latest
